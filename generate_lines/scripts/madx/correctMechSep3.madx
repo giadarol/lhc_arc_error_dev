@@ -1,0 +1,146 @@
+! script for adjusting some incorrect apertures / mech_seps as of 20211201, for optics HLLHCv1.5
+! version 05
+
+
+TAXN.4L1,aperture={0.249,0.249,0.249,0.249};
+TAXN.4R1,aperture={0.249,0.249,0.249,0.249};
+TAXN.4L5,aperture={0.249,0.249,0.249,0.249};
+TAXN.4R5,aperture={0.249,0.249,0.249,0.249};  
+
+VCTYD.4L2.G.B1,aperture={0.1083,0.1083,0.1083,0.1083};
+VCTYB.4R2.E.B1,aperture={0.1083,0.1083,0.1083,0.1083};
+VCTYA.4L8.D.B1,aperture={0.1083,0.1083,0.1083,0.1083};    
+VCTYC.4R8.F.B1,aperture={0.1083,0.1083,0.1083,0.1083};
+
+TCLIM.6R2.A.B1,mech_sep=-0.194;
+TCLIM.6R2.B.B1,mech_sep=-0.194; 
+TCLIM.6R2.D.B1,mech_sep=-0.194; 
+TCLIM.6R2.E.B1,mech_sep=-0.194; 
+TCLIM.6R2.F.B1,mech_sep=-0.194; 
+TCLIM.6R2.G.B1,mech_sep=-0.194; 
+
+TCDQM.4L6.A.B1,mech_sep=0.194; 
+TCDQM.4L6.B.B1,mech_sep=0.194;
+TCDQM.4L6.I.B1,mech_sep=0.194;
+TCDQM.4L6.L.B1,mech_sep=0.194;
+TCDQM.4R6.A.B1,mech_sep=0.194;
+TCDQM.4R6.C.B1,mech_sep=0.194;
+TCDQM.4R6.I.B1,mech_sep=0.194;
+TCDQM.4R6.J.B1,mech_sep=0.194;
+TCDQM.4L6.D.B1,mech_sep=0.194;
+TCDQM.4L6.K.B1,mech_sep=0.194;
+TCDQM.4R6.B.B1,mech_sep=0.194;
+TCDQM.4R6.K.B1,mech_sep=0.194;           
+
+TCAPM.5L7.A.B1,mech_sep=0.224;
+TCAPM.5L7.C.B1,mech_sep=0.224;
+TCAPM.5L7.F.B1,mech_sep=0.224;
+TCAPM.5L7.H.B1,mech_sep=0.224;
+TCAPM.5R7.A.B1,mech_sep=0.224;
+TCAPM.5R7.B.B1,mech_sep=0.224;
+TCAPM.5R7.C.B1,mech_sep=0.224;
+TCAPM.5R7.D.B1,mech_sep=0.224;  
+
+TCSPM.6R7.A.B1,mech_sep=0.224;
+TCSPMKH.6R7.A.B1,mech_sep=0.224;
+TCSPM.6R7.B1,mech_sep=0.224;
+TCSPM.6R7.B.B1,mech_sep=0.224;
+TCSPMKH.6R7.B.B1,mech_sep=0.224;     
+
+TCLIM.6L8.A.B1,mech_sep=0.194;
+TCLIM.6L8.B.B1,mech_sep=0.194;
+TCLIM.6L8.D.B1,mech_sep=0.194;
+TCLIM.6L8.E.B1,mech_sep=0.194;
+TCLIM.6L8.G.B1,mech_sep=0.194;
+TCLIM.6L8.H.B1,mech_sep=0.194;   
+
+
+seqedit,sequence=lhcb1;
+    remove,element=VAMSF.6L2.A.B1;
+    remove,element=VMSIO.6L2.A.B1;
+    remove,element=VAMSF.6l2.B.B1;
+    remove,element=VMSIO.6L2.B.B1;
+    remove,element=VAMSF.6L2.C.B1;
+    remove,element=VMSIO.6L2.C.B1;
+    remove,element=VMSIO.6L2.D.B1;
+    remove,element=VCTYE.4R6.A.B1;
+    remove,element=VCTYE.4R6.C.B1;
+    remove,element=BTVSE.A4L6.B1;
+    remove,element=BTVSE.4L6.F.B1;
+    remove,element=TCDSU.4L6.A.B1;
+    remove,element=TCDSA.4L6.B1;
+    remove,element=TCDSU.4L6.B.B1;
+    remove,element=TCDSD.4L6.A.B1;
+    remove,element=TCDSB.4L6.B1;
+    remove,element=TCDSD.4L6.B.B1;
+    remove,element=VMPBB.4L8.A.B1;
+    remove,element=VMPBB.4L8.B.B1;
+    remove,element=VCRLT.4L8.A.B1;
+    remove,element=VCRLT.4L8.B.B1;
+    remove,element=VCRLU.4L8.A.B1;
+    remove,element=VCRLU.4L8.B.B1;
+    remove,element=VCRLU.4L8.C.B1;
+    remove,element=VCRLU.4L8.D.B1;
+    remove,element=VMABA.4L8.A.B1;
+    remove,element=VMABA.4L8.B.B1;
+    remove,element=VMABA.4L8.C.B1;
+    remove,element=VMABA.4L8.D.B1;
+    remove,element=X2ZDC.4L2;
+    remove,element=X2ZDC.4R2;
+    remove,element=VVGST.4L1.M.B1;
+    remove,element=VVGST.4L1.N.B1;
+    remove,element=TCDQU.4R6.A.B1; ! something wrong with aperture
+    remove,element=TCDQU.4R6.B.B1; ! something wrong with aperture
+    flatten;
+endedit;
+
+TCTPV.4L1.A.B1,mech_sep=-0.1651;
+TCTPV.4L1.B.B1,mech_sep=-0.1651; 
+VAMSF.6L2.D.B1,mech_sep=+0.194;
+VCELW.6R3.G.B1,mech_sep=-0.201;
+VCDBG.5R6.B.B1,mech_sep=+0.194;
+BPMSX.4L8.B1,mech_sep=0;
+BPMSX.4R8.B1,mech_sep=0;
+BPMSX.4R2.B1,mech_sep=0;
+VVGST.4L8.A.B1,mech_sep=+0.174;
+VVGST.4L8.B.B1,mech_sep=+0.174; 
+VMJSB.6L3.D.B1,mech_sep=-0.224;
+
+!TCLIM.6L8.E.B1,aperture={}; - aper at 21 mm, should be 16 mm ??
+!TCLIM.6L8.B.B1,aperture={}; - aper at 21 mm, should be 16 mm ?? -- looks like aper1 / aper2 are interchanged 
+
+!!! some b2 elements are removed such that lhcb2 sequence can run, but for an accurate b2 aperture model, please use b4 files
+seqedit,sequence=lhcb2;
+    remove,element=MK.S.MCBCH.011.B2; ! negative
+    remove,element=TANB.4R8.B2;       ! negative
+    remove,element=TDIS.4R8.B2;       ! negative
+    remove,element=MK.S.MCBCH.089.B2; ! negative
+    remove,element=MK.S.MCBCH.105.B2; ! negative
+    remove,element=TCLD.11L2.B2;      ! negative
+    remove,element=MK.S.MCBCH.183.B2; ! negative
+    remove,element=X2ZDC.4L2;
+    remove,element=X2ZDC.4R2;
+    remove,element=TDISI.4L2.A.B2;
+    remove,element=TDISB.4L2.A.B2;
+    remove,element=TDISD.4L2.A.B2;
+    remove,element=TDISC.4L2.A.B2;
+    remove,element=TDIS.4L2.B.B2;
+    remove,element=TCDSD.4R6.A.B2;
+    remove,element=TCDSB.4R6.B2;
+    remove,element=TCDSD.4R6.B.B2;
+    remove,element=TCDSU.4R6.A.B2;
+    remove,element=TCDSA.4R6.B2; 
+    remove,element=TCDSA.4R6.B.B2;
+    remove,element=BTVSE.4R6.A.B2;
+    remove,element=BTVSE.A4R6.B2; 
+    remove,element=VCTYC.4R8.B.B2;
+    remove,element=VCTYC.4R8.D.B2;
+    remove,element=VCTYC.4R8.G.B2;
+    remove,element=VCTYC.4R8.J.B2;
+    remove,element=VVGST.4L1.M.B2;
+    remove,element=VVGST.4L1.N.B2;
+    remove,element=TCDSU.4R6.B.B2;
+    remove,element=TCDQU.4L6.A.B2; ! something wrong with aperture
+    remove,element=TCDQU.4L6.B.B2; ! something wrong with aperture
+    flatten;
+endedit;

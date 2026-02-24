@@ -1,0 +1,31 @@
+! Measured FQ-based D1 error installation
+
+Rr_MBXAB = 0.050;
+
+! === D1.4L1 (magnet: MBXF1, is_inv=0) ===
+call, file="tables/D1_tables/MBXAB_4L1_errortable";
+exec, new_magnetfamily(MBXAB); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MBXF\.4L1.*$";
+exec, new_magnetindividual(MBXAB,iap);
+exec, errorgenerate_dip(MBXAB);
+
+! === D1.4R1 (magnet: MBXF2, is_inv=1) ===
+call, file="tables/D1_tables/MBXAB_4R1_errortable";
+exec, new_magnetfamily(MBXAB); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MBXF\.4R1.*$";
+exec, new_magnetindividual(MBXAB,iap);
+exec, errorgenerate_dip_inv(MBXAB);
+
+! === D1.4L5 (magnet: MBXF3, is_inv=0) ===
+call, file="tables/D1_tables/MBXAB_4L5_errortable";
+exec, new_magnetfamily(MBXAB); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MBXF\.4L5.*$";
+exec, new_magnetindividual(MBXAB,iap);
+exec, errorgenerate_dip(MBXAB);
+
+! === D1.4R5 (magnet: MBXF5, is_inv=1) ===
+call, file="tables/D1_tables/MBXAB_4R5_errortable";
+exec, new_magnetfamily(MBXAB); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MBXF\.4R5.*$";
+exec, new_magnetindividual(MBXAB,iap);
+exec, errorgenerate_dip_inv(MBXAB);

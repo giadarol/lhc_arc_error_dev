@@ -1,0 +1,110 @@
+option,-echo,-info;
+option,-rbarc;
+
+system, "ln -s /afs/cern.ch/work/b/bjlindst/public/git/madx/acc-models-hl19/acc-models-lhc acc-models";
+
+call,file="acc-models/lhcb4_hl19.seq";
+call,file="acc-models/toolkit/macro.madx";
+bv_aux = -1;
+call,file="betastar.madx";
+mylhcbeam=4;
+exec,mk_beam(7000);
+
+!!! these optics files are flat!
+if(betastar==15 ){call,file='acc-models/strengths/cycle_round_v1/opt_round_15cm_ir7_no_crabs_v2.madx';}
+else if(betastar==20 ){call,file='acc-models/strengths/cycle_round_v1/opt_round_20cm_ir7_no_crabs_v2.madx';}
+else if(betastar==47 ){call,file='acc-models/strengths/cycle_round_v1/opt_round_47cm_ir7_no_crabs_v3.madx';}
+else if(betastar==64 ){call,file='acc-models/strengths/cycle_round_v1/opt_round_64cm_ir7_no_crabs_v2.madx';}
+else if(betastar==70 ){call,file='acc-models/strengths/cycle_round_v1/opt_round_70cm_ir7_no_crabs.madx';}
+else if(betastar==80 ){call,file='acc-models/strengths/cycle_round_v1/opt_round_80cm_ir7_no_crabs.madx';}
+else if(betastar==90 ){call,file='acc-models/strengths/cycle_round_v1/opt_round_90cm_ir7_no_crabs.madx';}
+else if(betastar==100){call,file='acc-models/strengths/cycle_round_v1/opt_round_100cm_ir7_no_crabs.madx';}
+else if(betastar==110){call,file='acc-models/strengths/cycle_round_v1/opt_round_110cm_ir7_no_crabs.madx';}
+else if(betastar==160){call,file='acc-models/strengths/cycle_round_v1/opt_round_160cm_ir7_no_crabs.madx';}
+else if(betastar==250){call,file='acc-models/strengths/cycle_round_v1/opt_round_250cm_ir7_no_crabs.madx';}
+else if(betastar==300){call,file='acc-models/strengths/cycle_round_v1/opt_round_300cm_ir7_no_crabs.madx';}
+else if(betastar==350){call,file='acc-models/strengths/cycle_round_v1/opt_round_350cm_ir7_no_crabs.madx';}
+else if(betastar==600){call,file='acc-models/strengths/cycle_round_v1/opt_round_600cm_ir7_no_crabs_test1.madx';}
+else{print,text="wrong betastar"betastar;return;};
+bv_aux = -1;
+
+seqedit,sequence=lhcb2;cycle,start=ip1.l1;endedit;
+value,bv_aux;
+call,file="acc-models/aperture/aperture.b2.madx";
+call,file="acc-models/aperture/aper_tol.b2.madx";
+call,file="acc-models/aperture/exp_pipe_model_after_LS3.madx";
+call,file="acc-models/aperture/exp_pipe_install_after_LS3.madx";
+call,file="acc-models/aperture/aperture_upgrade_IT.madx";
+call,file="acc-models/aperture/aperture_upgrade_MS.madx";
+!call,file="processedFiles/layoutDB.seq";
+!call,file="processedFiles/patchApertures_b1_release_v06.madx";
+call,file="processedFiles/fromCollimation_define.madx";
+call,file="processedFiles/fromCollimation_install.madx"; 
+
+seqedit,sequence=lhcb2;
+remove,element=mbas2.1r1;
+remove,element=mbls2.1l2;
+remove,element=mbls2.1r2;
+remove,element=mbaw.1r2;
+remove,element=mbcs2.1l5;
+remove,element=mbcs2.1r5;
+remove,element=mblw.1r8;
+remove,element=mbas2.1l1;
+endedit;
+call,file="processedFiles/correctMechSep3.madx";
+make_end_markers=1;
+value,bv_aux;
+seqedit,sequence=lhcb2;flatten;endedit;   
+exec,myslice;
+ 
+make_twiss(beta): macro = {
+    system, "mkdir -p out/beta";
+
+    select, flag=twiss, clear;
+    select, flag=twiss,column=name,keyword,s,l,mux,betx,alfx,muy,bety,alfy,dx,dpx,dy,dpy,x,y,px,py,apertype,mech_sep;
+
+    use, sequence=lhcb2;
+    twiss, centre=true, table=twiss;
+    write, table=twiss, file="out/beta/LHC_b4_7000GeV_thin.twiss";
+};
+
+mktwiss(beta): macro = {
+    exec,make_twiss($beta);
+};
+
+
+qxb1  = 62.31; qyb1  = 60.32; qxb2  = 62.31; qyb2  = 60.32;
+qpxb1 = 15; qpyb1 = 15; qpxb2 = 15; qpyb2 = 15;      
+
+!! Octupole Settings
+brho:=NRJ*1e9/clight;
+I_MO_B1 = octupolecurrent;
+I_MO_B2 = octupolecurrent;
+if (mylhcbeam<4){
+  KOF.A12B1:=Kmax_MO*I_MO_B1/Imax_MO/brho; KOF.A23B1:=Kmax_MO*I_MO_B1/Imax_MO/brho;
+  KOF.A34B1:=Kmax_MO*I_MO_B1/Imax_MO/brho; KOF.A45B1:=Kmax_MO*I_MO_B1/Imax_MO/brho;
+  KOF.A56B1:=Kmax_MO*I_MO_B1/Imax_MO/brho; KOF.A67B1:=Kmax_MO*I_MO_B1/Imax_MO/brho;
+  KOF.A78B1:=Kmax_MO*I_MO_B1/Imax_MO/brho; KOF.A81B1:=Kmax_MO*I_MO_B1/Imax_MO/brho;
+  KOD.A12B1:=Kmax_MO*I_MO_B1/Imax_MO/brho; KOD.A23B1:=Kmax_MO*I_MO_B1/Imax_MO/brho;
+  KOD.A34B1:=Kmax_MO*I_MO_B1/Imax_MO/brho; KOD.A45B1:=Kmax_MO*I_MO_B1/Imax_MO/brho;
+  KOD.A56B1:=Kmax_MO*I_MO_B1/Imax_MO/brho; KOD.A67B1:=Kmax_MO*I_MO_B1/Imax_MO/brho;
+  KOD.A78B1:=Kmax_MO*I_MO_B1/Imax_MO/brho; KOD.A81B1:=Kmax_MO*I_MO_B1/Imax_MO/brho;
+};
+KOF.A12B2:=Kmax_MO*I_MO_B2/Imax_MO/brho; KOF.A23B2:=Kmax_MO*I_MO_B2/Imax_MO/brho;
+KOF.A34B2:=Kmax_MO*I_MO_B2/Imax_MO/brho; KOF.A45B2:=Kmax_MO*I_MO_B2/Imax_MO/brho;
+KOF.A56B2:=Kmax_MO*I_MO_B2/Imax_MO/brho; KOF.A67B2:=Kmax_MO*I_MO_B2/Imax_MO/brho;
+KOF.A78B2:=Kmax_MO*I_MO_B2/Imax_MO/brho; KOF.A81B2:=Kmax_MO*I_MO_B2/Imax_MO/brho;
+KOD.A12B2:=Kmax_MO*I_MO_B2/Imax_MO/brho; KOD.A23B2:=Kmax_MO*I_MO_B2/Imax_MO/brho;
+KOD.A34B2:=Kmax_MO*I_MO_B2/Imax_MO/brho; KOD.A45B2:=Kmax_MO*I_MO_B2/Imax_MO/brho;
+KOD.A56B2:=Kmax_MO*I_MO_B2/Imax_MO/brho; KOD.A67B2:=Kmax_MO*I_MO_B2/Imax_MO/brho;
+KOD.A78B2:=Kmax_MO*I_MO_B2/Imax_MO/brho; KOD.A81B2:=Kmax_MO*I_MO_B2/Imax_MO/brho;
+
+! Rematch post-knobs
+
+call, file="acc-models/toolkit/rematch_chroma.madx";
+call, file="acc-models/toolkit/rematch_tune.madx";    
+
+
+exec,mktwiss(betastar);
+
+  

@@ -1,0 +1,300 @@
+! =============================================================================
+! Unified HL-LHC error line mask
+! =============================================================================
+! Symlinks (errors, tools, modules, madxdata, madxscripts) are created by useful_functions.setup_symlinks().
+!
+! Variables set by run_mask.py before calling this file:
+!   mylhcbeam, par_myseed, par_on_errors_LHC, on_D1, on_D2, on_IT, on_MCBRD
+! Everything else is set directly here — edit this file to change optics.
+
+
+!*************************!
+!  General configuration  !
+!*************************!
+
+par_verbose              = 1;
+
+! mylhcbeam set by run_mask.py
+
+! Beam parameters
+par_beam_norm_emit       = 2.0;          ! [um]
+par_beam_sigt            = 0.075;        ! [m]
+par_beam_sige            = 0.0;       ! [-]
+par_beam_npart           = 2.2e11;       ! [-]
+par_beam_energy_tot      = 7000;         ! [GeV]
+
+! Settings
+!par_oct_current          = 0;            ! [A]
+par_chromaticity         = 15;            ! [-]
+par_vrf_total            = 16.;          ! [MV]
+
+! Tunes
+par_qx0                  = 62.31;
+par_qy0                  = 60.32;
+
+! IP orbit settings
+par_x1                   = 250;          ! [urad]
+par_sep1                 = 0.0;        ! [mm]
+par_x2                   = 170;          ! [urad]
+par_sep2                 = 0.0;            ! [mm]
+par_x5                   = 250;          ! [urad]
+par_sep5                 = 0.0;         ! [mm]
+par_x8                   = -200;         ! [urad]
+par_sep8                 = 0.0;           ! [mm]
+par_a1                   = 0;            ! [urad]
+par_o1                   = 0;            ! [mm]
+par_a2                   = 0;            ! [urad]
+par_o2                   = 0;            ! [mm]
+par_a5                   = 0;            ! [urad]
+par_o5                   = 0;            ! [mm]
+par_a8                   = 0;            ! [urad]
+par_o8                   = 0;            ! [mm]
+par_crab1                = 0;  !-190;    ! [urad]
+par_crab5                = 0;            ! [urad]
+
+par_mux_ip15             = 0;
+par_muy_ip15             = 0;
+
+par_on_disp              = 1;
+
+par_on_alice             = 1;
+par_on_lhcb              = 1;
+
+par_on_sol_atlas         = 0;
+par_on_sol_cms           = 0;
+par_on_sol_alice         = 0;
+
+
+!*************************!
+! Beam-beam configuration !
+!*************************!
+
+par_on_bb_switch         = 0;
+par_match_with_bb        = 0;
+par_b_t_dist             = 25.;
+par_n_inside_D1          = 5;
+
+par_nho_IR1              = 11;
+par_nho_IR2              = 11;
+par_nho_IR5              = 11;
+par_nho_IR8              = 11;
+
+
+!*************************!
+!     Leveling in IP8     !
+!*************************!
+
+par_lumi_ip8             = 2e33;         ![Hz/cm2]
+
+par_nco_IP1              = 2748;
+par_nco_IP2              = 2494;
+par_nco_IP5              = par_nco_IP1;
+par_nco_IP8              = 2572;
+
+
+!*************************!
+!  Errors and corrections !
+!*************************!
+
+! par_myseed set by run_mask.py
+
+par_correct_for_D2       = 0;
+par_correct_for_MCBX     = 0;
+
+! par_on_errors_LHC set by run_mask.py
+par_off_errors_Q4_inIP15 = 0;
+par_off_errors_Q5_inIP15 = 0;
+par_on_errors_MBH        = 0;
+par_on_errors_Q4         = 0;
+! D1/D2/IT standard flags always OFF — custom measured FQ Efcomp calls used instead
+par_on_errors_D2         = 0;
+par_on_errors_D1         = 0;
+par_on_errors_IT         = 0;
+par_on_errors_MCBRD      = 0;
+par_on_errors_MCBXF      = 0;
+par_on_errors_NLC        = 0;
+
+par_write_errortable     = 1;
+
+
+!*************************!
+!           RUN           !
+!*************************!
+
+! Build machine and optics
+if (mylhcbeam==1) {
+    call, file="madxdata/lhcb1_hl19.seq";
+    call, file="madxscripts/macro.madx";
+    exec, mk_beam(7000);
+    call, file="madxdata/hl19_opt_round_eol.madx";
+    seqedit, sequence=lhcb1; cycle, start=ip1; endedit;
+    call, file="madxscripts/aperture.b1.madx";
+    call, file="madxscripts/aper_tol.b1.madx";
+    call, file="madxscripts/exp_pipe_model_after_LS3.madx";
+    call, file="madxscripts/exp_pipe_install_after_LS3.madx";
+    call, file="madxscripts/aperture_upgrade_IT.madx";
+    call, file="madxscripts/aperture_upgrade_MS.madx";
+    call, file="madxscripts/fromCollimation_define.madx";
+    call, file="madxscripts/fromCollimation_install.madx";
+};
+if (mylhcbeam>1) {
+    call, file="madxdata/lhcb2_hl19.seq";
+    call, file="madxscripts/macro.madx";
+    bv_aux = -1;
+    exec, mk_beam(7000);
+    call, file="madxdata/hl19_opt_round_eol.madx";
+    bv_aux = -1;
+    seqedit, sequence=lhcb2; cycle, start=ip1.l1; endedit;
+    bv_aux = -1;
+    call, file="madxscripts/aperture.b2.madx";
+    call, file="madxscripts/aper_tol.b2.madx";
+    bv_aux = -1;
+    call, file="madxscripts/exp_pipe_model_after_LS3.madx";
+    bv_aux = -1;
+    call, file="madxscripts/exp_pipe_install_after_LS3.madx";
+    bv_aux = -1;
+    call, file="madxscripts/aperture_upgrade_IT.madx";
+    bv_aux = -1;
+    call, file="madxscripts/aperture_upgrade_MS.madx";
+    call, file="madxscripts/fromCollimation_define_b4.madx";
+    call, file="madxscripts/fromCollimation_install_b4.madx";
+};
+seqedit,sequence=lhcb1;
+remove,element=mbas2.1r1; ! solenoid
+remove,element=mbls2.1l2; ! solenoid
+remove,element=mbls2.1r2; ! solenoid
+remove,element=alicepipe37.r2; ! conflict with mbaw.1r2
+remove,element=alicepipe36.r2; ! conflict with mbaw.1r2
+remove,element=alicepipe35.r2; ! conflict with mbaw.1r2
+remove,element=alicepipe34.r2; ! conflict with mbaw.1r2
+remove,element=alicepipe33.r2; ! conflict with mbaw.1r2
+remove,element=alicepipe32.r2; ! conflict with mbaw.1r2
+remove,element=alicepipe31.r2; ! conflict with mbaw.1r2
+remove,element=alicepipe30.r2; ! conflict with mbaw.1r2
+remove,element=alicepipe29.r2; ! conflict with mbaw.1r2
+remove,element=alicepipe28.r2; ! conflict with mbaw.1r2
+remove,element=alicepipe27.r2; ! conflict with mbaw.1r2
+remove,element=alicepipe26.r2; ! conflict with mbaw.1r2
+remove,element=alicepipe25.r2; ! conflict with mbaw.1r2
+remove,element=alicepipe24.r2; ! conflict with mbaw.1r2
+remove,element=mbcs2.1l5; ! solenoid
+remove,element=mbcs2.1r5; ! solenoid
+remove,element=mbas2.1l1; ! solenoid
+remove,element=lhcbpipe23.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe22.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe21.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe20.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe19.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe18.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe17.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe16.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe15.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe14.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe13.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe12.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe11.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe10.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe9.r8; ! conflict with mblw.1r8
+endedit;
+seqedit,sequence=lhcb2;
+remove,element=mbas2.1r1; ! solenoid
+remove,element=mbls2.1l2; ! solenoid
+remove,element=mbls2.1r2; ! solenoid
+remove,element=mbcs2.1l5; ! solenoid
+remove,element=mbcs2.1r5; ! solenoid
+remove,element=mbas2.1l1; ! solenoid
+remove,element=mk.s.mcbch.011.b2; ! conflict with mcbch.9l1.b2
+remove,element=mk.s.mcbch.089.b2; ! conflict with mcbch.8r5.b2
+remove,element=mk.s.mcbch.105.b2; ! conflict with mcbch.9l5.b2
+remove,element=mk.s.mcbch.183.b2; ! conflict with mcbch.8r1.b2
+remove,element=lhcbpipe23.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe22.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe21.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe20.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe19.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe18.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe17.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe16.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe15.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe14.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe13.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe12.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe11.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe10.r8; ! conflict with mblw.1r8
+remove,element=lhcbpipe9.r8; ! conflict with mblw.1r8
+remove,element=alicepipe37.r2; ! conflict with mbaw.1r2
+remove,element=alicepipe36.r2; ! conflict with mbaw.1r2
+remove,element=alicepipe35.r2; ! conflict with mbaw.1r2
+remove,element=alicepipe34.r2; ! conflict with mbaw.1r2
+remove,element=alicepipe33.r2; ! conflict with mbaw.1r2
+remove,element=alicepipe32.r2; ! conflict with mbaw.1r2
+remove,element=alicepipe31.r2; ! conflict with mbaw.1r2
+remove,element=alicepipe30.r2; ! conflict with mbaw.1r2
+remove,element=alicepipe29.r2; ! conflict with mbaw.1r2
+remove,element=alicepipe28.r2; ! conflict with mbaw.1r2
+remove,element=alicepipe27.r2; ! conflict with mbaw.1r2
+remove,element=alicepipe26.r2; ! conflict with mbaw.1r2
+remove,element=alicepipe25.r2; ! conflict with mbaw.1r2
+remove,element=alicepipe24.r2; ! conflict with mbaw.1r2
+endedit;
+call, file="madxscripts/rematch_chroma.madx";
+call, file="madxscripts/rematch_tune.madx";
+
+! Install MCBRD thin multipole placeholders (..r elements via seqedit)
+call, file="errors/HL-LHC/install_MCBRD_errors.madx";
+
+call, file="modules/module_01_orbit.madx";
+! module_04_1_finalizeseq_storerefs.madx replacement for HL19:
+! Crab cavities are already built into lhc_hl19.seq — no installation needed.
+! Only replicate submodule_04_1b_save_references.madx (reference saving).
+exec, crossing_disable;
+on_disp = 0;
+if (mylhcbeam==1) { exec, check_ip(b1); };
+if (mylhcbeam>1)  { exec, check_ip(b2); };
+exec, crossing_restore;
+on_disp = 0;
+if (mylhcbeam==1) { use, sequence=lhcb1; };
+if (mylhcbeam>1)  { use, sequence=lhcb2; };
+twiss;
+xnom1=table(twiss,IP1,x); pxnom1=table(twiss,IP1,px); ynom1=table(twiss,IP1,y); pynom1=table(twiss,IP1,py);
+xnom2=table(twiss,IP2,x); pxnom2=table(twiss,IP2,px); ynom2=table(twiss,IP2,y); pynom2=table(twiss,IP2,py);
+xnom5=table(twiss,IP5,x); pxnom5=table(twiss,IP5,px); ynom5=table(twiss,IP5,y); pynom5=table(twiss,IP5,py);
+xnom8=table(twiss,IP8,x); pxnom8=table(twiss,IP8,px); ynom8=table(twiss,IP8,y); pynom8=table(twiss,IP8,py);
+exec, crossing_restore;
+
+!******************************************!
+!    ERROR INSTALLATION -- NO CORRECTION   !
+!******************************************!
+call, file="modules/submodule_04a_preparation.madx";
+call, file="modules/submodule_04b_alignsep.madx";
+call, file="modules/submodule_04c_errortables.madx";
+call, file="modules/submodule_04d_efcomp.madx";
+
+! Spool-piece correctors (only active when arc errors are ON)
+if (par_on_errors_LHC == 1) {
+    call, file="modules/submodule_04e_s1_synthesize_knobs.madx";
+};
+
+! Custom measured FQ errors (conditional on config switches)
+if (on_D2 == 1) {
+    call, file="efcomp/Efcomp_MBRD_measured.madx";
+};
+if (on_D1 == 1) {
+    call, file="efcomp/Efcomp_MBXAB_measured.madx";
+};
+if (on_IT == 1) {
+    call, file="efcomp/Efcomp_MQXF_measured.madx";
+};
+if (on_MCBRD == 1) {
+    call, file="efcomp/Efcomp_MCBRD_measured.madx";
+};
+
+call, file="modules/submodule_04f_final.madx";
+
+
+!*************************!
+!   TUNING & GENERATE     !
+!*************************!
+
+call, file="modules/module_05_tuning.madx";
+call, file="modules/module_06_generate.madx";

@@ -1,0 +1,172 @@
+! Measured FQ-based IT error installation
+
+Rr_MQXFA = 0.050;
+Rr_MQXFB = 0.050;
+
+! === Q1a.R5 (magnet: MQXFA19) ===
+call, file="tables/IT_tables/MQXFA_A1R5_errortable";
+exec, new_magnetfamily(MQXFA); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MQXFA\.A1R5.*[0-9]$";
+exec, new_magnetindividual(MQXFA,iap);
+exec, errorgenerate_quad(MQXFA);
+
+! === Q1b.R5 (magnet: MQXFA20) ===
+call, file="tables/IT_tables/MQXFA_B1R5_errortable";
+exec, new_magnetfamily(MQXFA); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MQXFA\.B1R5.*[0-9]$";
+exec, new_magnetindividual(MQXFA,iap);
+exec, errorgenerate_quad_inv(MQXFA);
+
+! === Q1a.L5 (magnet: MQXFA10) ===
+call, file="tables/IT_tables/MQXFA_A1L5_errortable";
+exec, new_magnetfamily(MQXFA); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MQXFA\.A1L5.*[0-9]$";
+exec, new_magnetindividual(MQXFA,iap);
+exec, errorgenerate_quad_inv(MQXFA);
+
+! === Q1b.L5 (magnet: MQXFA11) ===
+call, file="tables/IT_tables/MQXFA_B1L5_errortable";
+exec, new_magnetfamily(MQXFA); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MQXFA\.B1L5.*[0-9]$";
+exec, new_magnetindividual(MQXFA,iap);
+exec, errorgenerate_quad(MQXFA);
+
+! === Q1a.R1 (magnet: MQXFA07b) ===
+call, file="tables/IT_tables/MQXFA_A1R1_errortable";
+exec, new_magnetfamily(MQXFA); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MQXFA\.A1R1.*[0-9]$";
+exec, new_magnetindividual(MQXFA,iap);
+exec, errorgenerate_quad(MQXFA);
+
+! === Q1b.R1 (magnet: MQXFA15) ===
+call, file="tables/IT_tables/MQXFA_B1R1_errortable";
+exec, new_magnetfamily(MQXFA); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MQXFA\.B1R1.*[0-9]$";
+exec, new_magnetindividual(MQXFA,iap);
+exec, errorgenerate_quad_inv(MQXFA);
+
+! === Q1a.L1 (magnet: MQXFA18) ===
+call, file="tables/IT_tables/MQXFA_A1L1_errortable";
+exec, new_magnetfamily(MQXFA); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MQXFA\.A1L1.*[0-9]$";
+exec, new_magnetindividual(MQXFA,iap);
+exec, errorgenerate_quad_inv(MQXFA);
+
+! === Q1b.L1 (magnet: MQXFA13b) ===
+call, file="tables/IT_tables/MQXFA_B1L1_errortable";
+exec, new_magnetfamily(MQXFA); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MQXFA\.B1L1.*[0-9]$";
+exec, new_magnetindividual(MQXFA,iap);
+exec, errorgenerate_quad(MQXFA);
+
+! === Q2a.R5 (magnet: MQXFB07) ===
+call, file="tables/IT_tables/MQXFB_A2R5_errortable";
+exec, new_magnetfamily(MQXFB); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MQXFB\.A2R5.*[0-9]$";
+exec, new_magnetindividual(MQXFB,iap);
+exec, errorgenerate_quad_inv(MQXFB);
+
+! === Q2b.R5 (magnet: MQXFB08) ===
+call, file="tables/IT_tables/MQXFB_B2R5_errortable";
+exec, new_magnetfamily(MQXFB); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MQXFB\.B2R5.*[0-9]$";
+exec, new_magnetindividual(MQXFB,iap);
+exec, errorgenerate_quad(MQXFB);
+
+! === Q2a.L5 (magnet: MQXFB05) ===
+call, file="tables/IT_tables/MQXFB_A2L5_errortable";
+exec, new_magnetfamily(MQXFB); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MQXFB\.A2L5.*[0-9]$";
+exec, new_magnetindividual(MQXFB,iap);
+exec, errorgenerate_quad(MQXFB);
+
+! === Q2b.L5 (magnet: MQXFB04) ===
+call, file="tables/IT_tables/MQXFB_B2L5_errortable";
+exec, new_magnetfamily(MQXFB); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MQXFB\.B2L5.*[0-9]$";
+exec, new_magnetindividual(MQXFB,iap);
+exec, errorgenerate_quad_inv(MQXFB);
+
+! === Q2a.R1 (magnet: MQXFB03) ===
+call, file="tables/IT_tables/MQXFB_A2R1_errortable";
+exec, new_magnetfamily(MQXFB); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MQXFB\.A2R1.*[0-9]$";
+exec, new_magnetindividual(MQXFB,iap);
+exec, errorgenerate_quad_inv(MQXFB);
+
+! === Q2b.R1 (magnet: MQXFB06) ===
+call, file="tables/IT_tables/MQXFB_B2R1_errortable";
+exec, new_magnetfamily(MQXFB); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MQXFB\.B2R1.*[0-9]$";
+exec, new_magnetindividual(MQXFB,iap);
+exec, errorgenerate_quad(MQXFB);
+
+! === Q2a.L1 (magnet: MQXFB09) ===
+call, file="tables/IT_tables/MQXFB_A2L1_errortable";
+exec, new_magnetfamily(MQXFB); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MQXFB\.A2L1.*[0-9]$";
+exec, new_magnetindividual(MQXFB,iap);
+exec, errorgenerate_quad(MQXFB);
+
+! === Q2b.L1 (magnet: MQXFB10) ===
+call, file="tables/IT_tables/MQXFB_B2L1_errortable";
+exec, new_magnetfamily(MQXFB); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MQXFB\.B2L1.*[0-9]$";
+exec, new_magnetindividual(MQXFB,iap);
+exec, errorgenerate_quad_inv(MQXFB);
+
+! === Q3a.R5 (magnet: MQXFA21) ===
+call, file="tables/IT_tables/MQXFA_A3R5_errortable";
+exec, new_magnetfamily(MQXFA); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MQXFA\.A3R5.*[0-9]$";
+exec, new_magnetindividual(MQXFA,iap);
+exec, errorgenerate_quad(MQXFA);
+
+! === Q3b.R5 (magnet: MQXFA22) ===
+call, file="tables/IT_tables/MQXFA_B3R5_errortable";
+exec, new_magnetfamily(MQXFA); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MQXFA\.B3R5.*[0-9]$";
+exec, new_magnetindividual(MQXFA,iap);
+exec, errorgenerate_quad_inv(MQXFA);
+
+! === Q3a.L5 (magnet: MQXFA17b) ===
+call, file="tables/IT_tables/MQXFA_A3L5_errortable";
+exec, new_magnetfamily(MQXFA); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MQXFA\.A3L5.*[0-9]$";
+exec, new_magnetindividual(MQXFA,iap);
+exec, errorgenerate_quad_inv(MQXFA);
+
+! === Q3b.L5 (magnet: MQXFA12b) ===
+call, file="tables/IT_tables/MQXFA_B3L5_errortable";
+exec, new_magnetfamily(MQXFA); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MQXFA\.B3L5.*[0-9]$";
+exec, new_magnetindividual(MQXFA,iap);
+exec, errorgenerate_quad(MQXFA);
+
+! === Q3a.R1 (magnet: MQXFA14b) ===
+call, file="tables/IT_tables/MQXFA_A3R1_errortable";
+exec, new_magnetfamily(MQXFA); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MQXFA\.A3R1.*[0-9]$";
+exec, new_magnetindividual(MQXFA,iap);
+exec, errorgenerate_quad(MQXFA);
+
+! === Q3b.R1 (magnet: MQXFA08b) ===
+call, file="tables/IT_tables/MQXFA_B3R1_errortable";
+exec, new_magnetfamily(MQXFA); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MQXFA\.B3R1.*[0-9]$";
+exec, new_magnetindividual(MQXFA,iap);
+exec, errorgenerate_quad_inv(MQXFA);
+
+! === Q3a.L1 (magnet: MQXFA23) ===
+call, file="tables/IT_tables/MQXFA_A3L1_errortable";
+exec, new_magnetfamily(MQXFA); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MQXFA\.A3L1.*[0-9]$";
+exec, new_magnetindividual(MQXFA,iap);
+exec, errorgenerate_quad_inv(MQXFA);
+
+! === Q3b.L1 (magnet: MQXFA24) ===
+call, file="tables/IT_tables/MQXFA_B3L1_errortable";
+exec, new_magnetfamily(MQXFA); iap=0;
+select,flag=error,clear;select,flag=error,pattern="^MQXFA\.B3L1.*[0-9]$";
+exec, new_magnetindividual(MQXFA,iap);
+exec, errorgenerate_quad(MQXFA);

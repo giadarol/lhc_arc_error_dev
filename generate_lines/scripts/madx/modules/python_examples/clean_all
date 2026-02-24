@@ -1,0 +1,20 @@
+rm fc.* 
+rm *.log
+rm final_seq.madx
+rm *.tfs
+rm bb_lenses.dat
+rm *.parquet
+rm *.pkl
+rm *.json
+rm twiss_*.b1
+rm twiss_*.b2
+rm twiss_bb
+rm last_twiss.*.gz
+rm fort.*
+rm *.tfs
+rm -r xline 
+rm -r temp
+rm -r __pycache__ 
+rm -r xsuite_lines
+# Remove all links
+find -type l -exec rm {} \;

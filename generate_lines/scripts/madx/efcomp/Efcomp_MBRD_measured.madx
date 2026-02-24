@@ -1,0 +1,85 @@
+! Measured FQ-based D2 error installation
+
+Rr_MBRD = 0.035;
+
+! === D2.4L1 (magnet: MBRD1, is_inv=1) ===
+if (print_errors==1){print, text="Errors for MBRD.4L1.*";};
+call, file="tables/D2_tables/MBRD_4L1_errortable";
+exec, new_magnetfamily_MB(MBRD);
+select,flag=error,clear;select,flag=error,pattern="^MBRD\.4L1.*$";
+iap=1; exec, new_magnetindividual(MBRD,iap);  exec, average_of_randoms(ssrBeam1,ssr,ssr);
+iap=2; exec, new_magnetindividual(MBRD,iap);  exec, average_of_randoms(ssrBeam2,ssr,ssr);
+if(use_average_errors_MBRD==1){
+    exec, average_of_randoms(ssr,ssrBeam1,ssrBeam2);
+};
+if(use_average_errors_MBRD==0){
+    if(mylhcbeam==1){
+        exec, average_of_randoms(ssr,ssrBeam1,ssrBeam1);
+    };
+    if(mylhcbeam>1){
+        exec, average_of_randoms(ssr,ssrBeam2,ssrBeam2);
+    };
+};
+exec, errorgenerate_dip_inv(MBRD);
+
+! === D2.4R1 (magnet: MBRD2, is_inv=0) ===
+if (print_errors==1){print, text="Errors for MBRD.4R1.*";};
+call, file="tables/D2_tables/MBRD_4R1_errortable";
+exec, new_magnetfamily_MB(MBRD);
+select,flag=error,clear;select,flag=error,pattern="^MBRD\.4R1.*$";
+iap=1; exec, new_magnetindividual(MBRD,iap);  exec, average_of_randoms(ssrBeam1,ssr,ssr);
+iap=2; exec, new_magnetindividual(MBRD,iap);  exec, average_of_randoms(ssrBeam2,ssr,ssr);
+if(use_average_errors_MBRD==1){
+    exec, average_of_randoms(ssr,ssrBeam1,ssrBeam2);
+};
+if(use_average_errors_MBRD==0){
+    if(mylhcbeam==1){
+        exec, average_of_randoms(ssr,ssrBeam1,ssrBeam1);
+    };
+    if(mylhcbeam>1){
+        exec, average_of_randoms(ssr,ssrBeam2,ssrBeam2);
+    };
+};
+exec, errorgenerate_dip(MBRD);
+
+! === D2.4L5 (magnet: MBRD3, is_inv=1) ===
+if (print_errors==1){print, text="Errors for MBRD.4L5.*";};
+call, file="tables/D2_tables/MBRD_4L5_errortable";
+exec, new_magnetfamily_MB(MBRD);
+select,flag=error,clear;select,flag=error,pattern="^MBRD\.4L5.*$";
+iap=1; exec, new_magnetindividual(MBRD,iap);  exec, average_of_randoms(ssrBeam1,ssr,ssr);
+iap=2; exec, new_magnetindividual(MBRD,iap);  exec, average_of_randoms(ssrBeam2,ssr,ssr);
+if(use_average_errors_MBRD==1){
+    exec, average_of_randoms(ssr,ssrBeam1,ssrBeam2);
+};
+if(use_average_errors_MBRD==0){
+    if(mylhcbeam==1){
+        exec, average_of_randoms(ssr,ssrBeam1,ssrBeam1);
+    };
+    if(mylhcbeam>1){
+        exec, average_of_randoms(ssr,ssrBeam2,ssrBeam2);
+    };
+};
+exec, errorgenerate_dip_inv(MBRD);
+
+! === D2.4R5 (magnet: MBRD4, is_inv=0) ===
+if (print_errors==1){print, text="Errors for MBRD.4R5.*";};
+call, file="tables/D2_tables/MBRD_4R5_errortable";
+exec, new_magnetfamily_MB(MBRD);
+select,flag=error,clear;select,flag=error,pattern="^MBRD\.4R5.*$";
+iap=1; exec, new_magnetindividual(MBRD,iap);  exec, average_of_randoms(ssrBeam1,ssr,ssr);
+iap=2; exec, new_magnetindividual(MBRD,iap);  exec, average_of_randoms(ssrBeam2,ssr,ssr);
+if(use_average_errors_MBRD==1){
+    exec, average_of_randoms(ssr,ssrBeam1,ssrBeam2);
+};
+if(use_average_errors_MBRD==0){
+    if(mylhcbeam==1){
+        exec, average_of_randoms(ssr,ssrBeam1,ssrBeam1);
+    };
+    if(mylhcbeam>1){
+        exec, average_of_randoms(ssr,ssrBeam2,ssrBeam2);
+    };
+};
+exec, errorgenerate_dip(MBRD);
+
+use_average_errors_MBRD=0;

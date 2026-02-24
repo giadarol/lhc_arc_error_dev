@@ -1,0 +1,123 @@
+! script for adjusting some incorrect apertures / mech_seps as of 20211201, for optics HLLHCv1.5
+! version 05 
+
+TAXN.4L1,aperture={0.249,0.249,0.249,0.249};
+TAXN.4R1,aperture={0.249,0.249,0.249,0.249};
+TAXN.4L5,aperture={0.249,0.249,0.249,0.249};
+TAXN.4R5,aperture={0.249,0.249,0.249,0.249};  
+
+VCTYD.4L2.F.B2,mech_sep=0.1103;
+VCTYB.4R2.E.B2,mech_sep=-0.1103;
+TCLIM.6R2.A.B2,mech_sep=-0.194;
+TCLIM.6R2.B.B2,mech_sep=-0.194;
+TCLIM.6R2.F.B2,mech_sep=-0.194;
+TCLIM.6R2.H.B2 mech_sep=-0.194;
+TCLIM.6R2.D.B2,mech_sep=-0.194;
+TCLIM.6R2.G.B2,mech_sep=-0.194;  
+
+TCDQM.4L6.A.B2,mech_sep=0.194;
+TCDQM.4L6.B.B2,mech_sep=0.194;
+TCDQM.4L6.I.B2,mech_sep=0.194;
+TCDQM.4L6.L.B2,mech_sep=0.194;
+TCDQM.4L6.C.B2,mech_sep=0.194;
+TCDQM.4L6.J.B2,mech_sep=0.194;  
+
+VCTYE.4L6.A.B2,mech_sep=0.194;
+VCTYE.4L6.C.B2,mech_sep=0.194;
+
+TCDQM.4R6.A.B2,mech_sep=0.194;
+TCDQM.4R6.B.B2,mech_sep=0.194;
+TCDQM.4R6.D.B2,mech_sep=0.194;
+TCDQM.4R6.I.B2,mech_sep=0.194;
+TCDQM.4R6.J.B2,mech_sep=0.194;
+TCDQM.4R6.K.B2,mech_sep=0.194;
+
+TCAPM.5L7.A.B2,mech_sep=0.224;
+TCAPM.5L7.B.B2,mech_sep=0.224;
+TCAPM.5L7.C.B2,mech_sep=0.224;
+TCAPM.5L7.D.B2,mech_sep=0.224;
+TCAPM.5R7.B.B2,mech_sep=0.224;
+TCAPM.5R7.D.B2,mech_sep=0.224;
+TCAPM.5R7.E.B2,mech_sep=0.224;
+TCAPM.5R7.H.B2,mech_sep=0.224;
+TCSPM.6R7.A.B2,mech_sep=0.224;
+TCSPMKH.6R7.A.B2,mech_sep=0.224;
+TCSPM.6R7.B.B2,mech_sep=0.224;
+TCSPMKH.6R7.B.B2,mech_sep=0.224;    
+
+TCLIM.6L8.A.B2,mech_sep=0.194;
+TCLIM.6L8.D.B2,mech_sep=0.194;
+TCLIM.6L8.F.B2,mech_sep=0.194;
+TCLIM.6L8.H.B2,mech_sep=0.194;
+TCLIM.6L8.C.B2,mech_sep=0.194;
+TCLIM.6L8.G.B2,mech_sep=0.194;
+
+VMPBB.4L8.A.B2,mech_sep=0.174;
+VMPBB.4L8.B.B2,mech_sep=0.174;
+VCRLT.4L8.A.B2,mech_sep=0.174;
+
+VCRLT.4L8.B.B2,mech_sep=0.16606;
+
+VCRLU.4L8.A.B2,mech_sep=0.159;
+VCRLU.4L8.B.B2,mech_sep=0.159;
+VCRLU.4L8.C.B2,mech_sep=0.159;
+VCRLU.4L8.D.B2,mech_sep=0.159;
+VMABA.4L8.A.B2,mech_sep=0.159;
+VMABA.4L8.B.B2,mech_sep=0.159;
+
+VMABA.4L8.C.B2,mech_sep=0.163;
+VMABA.4L8.D.B2,mech_sep=0.163;
+
+VCTYA.4L8.D.B2,mech_sep=0.111;
+
+VTCLPX.4R1.A.B2,mech_sep=0.1745;
+VTCLPX.4R1.B.B2,mech_sep=0.1745;
+VTCLPX.4R5.A.B2,mech_sep=0.1745;
+VTCLPX.4R5.B.B2,mech_sep=0.1745;
+
+seqedit,sequence=lhcb2;
+    remove,element=MK.S.MCBCH.011.B2; ! negative
+    remove,element=TANB.4R8.B2;       ! negative
+    remove,element=TDIS.4R8.B2;       ! negative
+    remove,element=MK.S.MCBCH.089.B2; ! negative
+    remove,element=MK.S.MCBCH.105.B2; ! negative
+    remove,element=TCLD.11L2.B2;      ! negative
+    remove,element=MK.S.MCBCH.183.B2; ! negative
+    remove,element=X2ZDC.4L2;
+    remove,element=X2ZDC.4R2;
+    remove,element=TDISI.4L2.A.B2;
+    remove,element=TDISB.4L2.A.B2;
+    remove,element=TDISD.4L2.A.B2;
+    remove,element=TDISC.4L2.A.B2;
+    remove,element=TDIS.4L2.B.B2;
+    remove,element=TCDSD.4R6.A.B2;
+    remove,element=TCDSB.4R6.B2;
+    remove,element=TCDSD.4R6.B.B2;
+    remove,element=TCDSU.4R6.A.B2;
+    remove,element=TCDSA.4R6.B2; 
+    remove,element=TCDSA.4R6.B.B2;
+    remove,element=BTVSE.4R6.A.B2;
+    remove,element=BTVSE.A4R6.B2; 
+    remove,element=VCTYC.4R8.B.B2;
+    remove,element=VCTYC.4R8.D.B2;
+    remove,element=VCTYC.4R8.G.B2;
+    remove,element=VCTYC.4R8.J.B2;
+    remove,element=VVGST.4L1.M.B2;
+    remove,element=VVGST.4L1.N.B2;
+    remove,element=TCDSU.4R6.B.B2;
+    remove,element=TCDQU.4L6.A.B2; ! something wrong with aperture
+    remove,element=TCDQU.4L6.B.B2; ! something wrong with aperture
+    flatten;
+endedit;
+
+
+VVGST.4L8.A.B2,mech_sep=0.174;
+VVGST.4L8.B.B2,mech_sep=0.174;
+BPMSX.4L8.B2,mech_sep=0;
+BPMSX.4R8.B2,mech_sep=0;  
+VCELW.6R3.G.B2,mech_sep=-0.201; 
+VMJSB.6L3.D.B2,mech_sep=-0.224;  
+BPMSX.4R2.B2,mech_sep=0;
+TCLX.4L1.A.B2,mech_sep=-0.1745;
+TCLX.4L1.B.B2,mech_sep=-0.1745; 
+TCLIB.6L8.B2,aperture={0.04,0.03,0.04,0.04};
