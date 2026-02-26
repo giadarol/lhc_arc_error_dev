@@ -37,7 +37,7 @@ seed = 6
 version = 19
 optics = 'round'
 i_mo = 300.
-output_path = './'
+out_path = './'
 
 
 '''

@@ -128,14 +128,14 @@ if (mylhcbeam==1) {
     exec, mk_beam(7000);
     call, file="madxdata/hl19_opt_round_eol.madx";
     seqedit, sequence=lhcb1; cycle, start=ip1; endedit;
-    call, file="madxscripts/aperture.b1.madx";
-    call, file="madxscripts/aper_tol.b1.madx";
-    call, file="madxscripts/exp_pipe_model_after_LS3.madx";
-    call, file="madxscripts/exp_pipe_install_after_LS3.madx";
-    call, file="madxscripts/aperture_upgrade_IT.madx";
-    call, file="madxscripts/aperture_upgrade_MS.madx";
-    call, file="madxscripts/fromCollimation_define.madx";
-    call, file="madxscripts/fromCollimation_install.madx";
+    ! call, file="madxscripts/aperture.b1.madx";
+    ! call, file="madxscripts/aper_tol.b1.madx";
+    ! call, file="madxscripts/exp_pipe_model_after_LS3.madx";
+    ! call, file="madxscripts/exp_pipe_install_after_LS3.madx";
+    ! call, file="madxscripts/aperture_upgrade_IT.madx";
+    ! call, file="madxscripts/aperture_upgrade_MS.madx";
+    ! call, file="madxscripts/fromCollimation_define.madx";
+    ! call, file="madxscripts/fromCollimation_install.madx";
 };
 if (mylhcbeam>1) {
     call, file="madxdata/lhcb2_hl19.seq";
@@ -146,110 +146,110 @@ if (mylhcbeam>1) {
     bv_aux = -1;
     seqedit, sequence=lhcb2; cycle, start=ip1.l1; endedit;
     bv_aux = -1;
-    call, file="madxscripts/aperture.b2.madx";
-    call, file="madxscripts/aper_tol.b2.madx";
-    bv_aux = -1;
-    call, file="madxscripts/exp_pipe_model_after_LS3.madx";
-    bv_aux = -1;
-    call, file="madxscripts/exp_pipe_install_after_LS3.madx";
-    bv_aux = -1;
-    call, file="madxscripts/aperture_upgrade_IT.madx";
-    bv_aux = -1;
-    call, file="madxscripts/aperture_upgrade_MS.madx";
-    call, file="madxscripts/fromCollimation_define_b4.madx";
-    call, file="madxscripts/fromCollimation_install_b4.madx";
+    ! call, file="madxscripts/aperture.b2.madx";
+    ! call, file="madxscripts/aper_tol.b2.madx";
+    ! bv_aux = -1;
+    ! call, file="madxscripts/exp_pipe_model_after_LS3.madx";
+    ! bv_aux = -1;
+    ! call, file="madxscripts/exp_pipe_install_after_LS3.madx";
+    ! bv_aux = -1;
+    ! call, file="madxscripts/aperture_upgrade_IT.madx";
+    ! bv_aux = -1;
+    ! call, file="madxscripts/aperture_upgrade_MS.madx";
+    ! call, file="madxscripts/fromCollimation_define_b4.madx";
+    ! call, file="madxscripts/fromCollimation_install_b4.madx";
 };
-seqedit,sequence=lhcb1;
-remove,element=mbas2.1r1; ! solenoid
-remove,element=mbls2.1l2; ! solenoid
-remove,element=mbls2.1r2; ! solenoid
-remove,element=alicepipe37.r2; ! conflict with mbaw.1r2
-remove,element=alicepipe36.r2; ! conflict with mbaw.1r2
-remove,element=alicepipe35.r2; ! conflict with mbaw.1r2
-remove,element=alicepipe34.r2; ! conflict with mbaw.1r2
-remove,element=alicepipe33.r2; ! conflict with mbaw.1r2
-remove,element=alicepipe32.r2; ! conflict with mbaw.1r2
-remove,element=alicepipe31.r2; ! conflict with mbaw.1r2
-remove,element=alicepipe30.r2; ! conflict with mbaw.1r2
-remove,element=alicepipe29.r2; ! conflict with mbaw.1r2
-remove,element=alicepipe28.r2; ! conflict with mbaw.1r2
-remove,element=alicepipe27.r2; ! conflict with mbaw.1r2
-remove,element=alicepipe26.r2; ! conflict with mbaw.1r2
-remove,element=alicepipe25.r2; ! conflict with mbaw.1r2
-remove,element=alicepipe24.r2; ! conflict with mbaw.1r2
-remove,element=mbcs2.1l5; ! solenoid
-remove,element=mbcs2.1r5; ! solenoid
-remove,element=mbas2.1l1; ! solenoid
-remove,element=lhcbpipe23.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe22.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe21.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe20.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe19.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe18.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe17.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe16.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe15.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe14.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe13.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe12.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe11.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe10.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe9.r8; ! conflict with mblw.1r8
-endedit;
-seqedit,sequence=lhcb2;
-remove,element=mbas2.1r1; ! solenoid
-remove,element=mbls2.1l2; ! solenoid
-remove,element=mbls2.1r2; ! solenoid
-remove,element=mbcs2.1l5; ! solenoid
-remove,element=mbcs2.1r5; ! solenoid
-remove,element=mbas2.1l1; ! solenoid
-remove,element=mk.s.mcbch.011.b2; ! conflict with mcbch.9l1.b2
-remove,element=mk.s.mcbch.089.b2; ! conflict with mcbch.8r5.b2
-remove,element=mk.s.mcbch.105.b2; ! conflict with mcbch.9l5.b2
-remove,element=mk.s.mcbch.183.b2; ! conflict with mcbch.8r1.b2
-remove,element=lhcbpipe23.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe22.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe21.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe20.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe19.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe18.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe17.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe16.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe15.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe14.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe13.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe12.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe11.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe10.r8; ! conflict with mblw.1r8
-remove,element=lhcbpipe9.r8; ! conflict with mblw.1r8
-remove,element=alicepipe37.r2; ! conflict with mbaw.1r2
-remove,element=alicepipe36.r2; ! conflict with mbaw.1r2
-remove,element=alicepipe35.r2; ! conflict with mbaw.1r2
-remove,element=alicepipe34.r2; ! conflict with mbaw.1r2
-remove,element=alicepipe33.r2; ! conflict with mbaw.1r2
-remove,element=alicepipe32.r2; ! conflict with mbaw.1r2
-remove,element=alicepipe31.r2; ! conflict with mbaw.1r2
-remove,element=alicepipe30.r2; ! conflict with mbaw.1r2
-remove,element=alicepipe29.r2; ! conflict with mbaw.1r2
-remove,element=alicepipe28.r2; ! conflict with mbaw.1r2
-remove,element=alicepipe27.r2; ! conflict with mbaw.1r2
-remove,element=alicepipe26.r2; ! conflict with mbaw.1r2
-remove,element=alicepipe25.r2; ! conflict with mbaw.1r2
-remove,element=alicepipe24.r2; ! conflict with mbaw.1r2
-endedit;
-if (mylhcbeam==1) {
-    call, file="madxscripts/correctMechSep3.madx";
-    make_end_markers=1;
-    seqedit, sequence=lhcb1; flatten; endedit;
-};
-if (mylhcbeam>1) {
-    call, file="madxscripts/correctMechSep3_b4.madx";
-    make_end_markers=1;
-    seqedit, sequence=lhcb2; flatten; endedit;
-};
+! seqedit,sequence=lhcb1;
+! remove,element=mbas2.1r1; ! solenoid
+! remove,element=mbls2.1l2; ! solenoid
+! remove,element=mbls2.1r2; ! solenoid
+! remove,element=alicepipe37.r2; ! conflict with mbaw.1r2
+! remove,element=alicepipe36.r2; ! conflict with mbaw.1r2
+! remove,element=alicepipe35.r2; ! conflict with mbaw.1r2
+! remove,element=alicepipe34.r2; ! conflict with mbaw.1r2
+! remove,element=alicepipe33.r2; ! conflict with mbaw.1r2
+! remove,element=alicepipe32.r2; ! conflict with mbaw.1r2
+! remove,element=alicepipe31.r2; ! conflict with mbaw.1r2
+! remove,element=alicepipe30.r2; ! conflict with mbaw.1r2
+! remove,element=alicepipe29.r2; ! conflict with mbaw.1r2
+! remove,element=alicepipe28.r2; ! conflict with mbaw.1r2
+! remove,element=alicepipe27.r2; ! conflict with mbaw.1r2
+! remove,element=alicepipe26.r2; ! conflict with mbaw.1r2
+! remove,element=alicepipe25.r2; ! conflict with mbaw.1r2
+! remove,element=alicepipe24.r2; ! conflict with mbaw.1r2
+! remove,element=mbcs2.1l5; ! solenoid
+! remove,element=mbcs2.1r5; ! solenoid
+! remove,element=mbas2.1l1; ! solenoid
+! remove,element=lhcbpipe23.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe22.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe21.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe20.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe19.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe18.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe17.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe16.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe15.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe14.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe13.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe12.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe11.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe10.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe9.r8; ! conflict with mblw.1r8
+! endedit;
+! seqedit,sequence=lhcb2;
+! remove,element=mbas2.1r1; ! solenoid
+! remove,element=mbls2.1l2; ! solenoid
+! remove,element=mbls2.1r2; ! solenoid
+! remove,element=mbcs2.1l5; ! solenoid
+! remove,element=mbcs2.1r5; ! solenoid
+! remove,element=mbas2.1l1; ! solenoid
+! remove,element=mk.s.mcbch.011.b2; ! conflict with mcbch.9l1.b2
+! remove,element=mk.s.mcbch.089.b2; ! conflict with mcbch.8r5.b2
+! remove,element=mk.s.mcbch.105.b2; ! conflict with mcbch.9l5.b2
+! remove,element=mk.s.mcbch.183.b2; ! conflict with mcbch.8r1.b2
+! remove,element=lhcbpipe23.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe22.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe21.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe20.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe19.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe18.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe17.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe16.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe15.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe14.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe13.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe12.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe11.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe10.r8; ! conflict with mblw.1r8
+! remove,element=lhcbpipe9.r8; ! conflict with mblw.1r8
+! remove,element=alicepipe37.r2; ! conflict with mbaw.1r2
+! remove,element=alicepipe36.r2; ! conflict with mbaw.1r2
+! remove,element=alicepipe35.r2; ! conflict with mbaw.1r2
+! remove,element=alicepipe34.r2; ! conflict with mbaw.1r2
+! remove,element=alicepipe33.r2; ! conflict with mbaw.1r2
+! remove,element=alicepipe32.r2; ! conflict with mbaw.1r2
+! remove,element=alicepipe31.r2; ! conflict with mbaw.1r2
+! remove,element=alicepipe30.r2; ! conflict with mbaw.1r2
+! remove,element=alicepipe29.r2; ! conflict with mbaw.1r2
+! remove,element=alicepipe28.r2; ! conflict with mbaw.1r2
+! remove,element=alicepipe27.r2; ! conflict with mbaw.1r2
+! remove,element=alicepipe26.r2; ! conflict with mbaw.1r2
+! remove,element=alicepipe25.r2; ! conflict with mbaw.1r2
+! remove,element=alicepipe24.r2; ! conflict with mbaw.1r2
+! endedit;
+! if (mylhcbeam==1) {
+!     call, file="madxscripts/correctMechSep3.madx";
+!     make_end_markers=1;
+!     seqedit, sequence=lhcb1; flatten; endedit;
+! };
+! if (mylhcbeam>1) {
+!     call, file="madxscripts/correctMechSep3_b4.madx";
+!     make_end_markers=1;
+!     seqedit, sequence=lhcb2; flatten; endedit;
+! };
 exec, myslice;
-call, file="madxscripts/rematch_chroma.madx";
-call, file="madxscripts/rematch_tune.madx";
+! call, file="madxscripts/rematch_chroma.madx";
+! call, file="madxscripts/rematch_tune.madx";
 
 ! Install MCBRD thin multipole placeholders (..r elements via seqedit)
 call, file="errors/HL-LHC/install_MCBRD_errors.madx";
@@ -281,31 +281,31 @@ call, file="modules/submodule_04b_alignsep.madx";
 call, file="modules/submodule_04c_errortables.madx";
 call, file="modules/submodule_04d_efcomp.madx";
 
-! Spool-piece correctors (only active when arc errors are ON)
-if (par_on_errors_LHC == 1) {
-    call, file="modules/submodule_04e_s1_synthesize_knobs.madx";
-};
+! ! Spool-piece correctors (only active when arc errors are ON)
+! if (par_on_errors_LHC == 1) {
+!     call, file="modules/submodule_04e_s1_synthesize_knobs.madx";
+! };
 
- Custom measured FQ errors (conditional on config switches)
-if (on_D2 == 1) {
-    call, file="efcomp/Efcomp_MBRD_measured.madx";
-};
-if (on_D1 == 1) {
-    call, file="efcomp/Efcomp_MBXAB_measured.madx";
-};
-if (on_IT == 1) {
-    call, file="efcomp/Efcomp_MQXF_measured.madx";
-};
-if (on_MCBRD == 1) {
-    call, file="efcomp/Efcomp_MCBRD_measured.madx";
-};
+!  Custom measured FQ errors (conditional on config switches)
+! if (on_D2 == 1) {
+!     call, file="efcomp/Efcomp_MBRD_measured.madx";
+! };
+! if (on_D1 == 1) {
+!     call, file="efcomp/Efcomp_MBXAB_measured.madx";
+! };
+! if (on_IT == 1) {
+!     call, file="efcomp/Efcomp_MQXF_measured.madx";
+! };
+! if (on_MCBRD == 1) {
+!     call, file="efcomp/Efcomp_MCBRD_measured.madx";
+! };
 
-call, file="modules/submodule_04f_final.madx";
+! call, file="modules/submodule_04f_final.madx";
 
 
-!*************************!
-!   TUNING & GENERATE     !
-!*************************!
+! !*************************!
+! !   TUNING & GENERATE     !
+! !*************************!
 
-call, file="modules/module_05_tuning.madx";
-call, file="modules/module_06_generate.madx";
+! call, file="modules/module_05_tuning.madx";
+! call, file="modules/module_06_generate.madx";
