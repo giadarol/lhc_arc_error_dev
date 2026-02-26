@@ -237,6 +237,17 @@ remove,element=alicepipe26.r2; ! conflict with mbaw.1r2
 remove,element=alicepipe25.r2; ! conflict with mbaw.1r2
 remove,element=alicepipe24.r2; ! conflict with mbaw.1r2
 endedit;
+if (mylhcbeam==1) {
+    call, file="madxscripts/correctMechSep3.madx";
+    make_end_markers=1;
+    seqedit, sequence=lhcb1; flatten; endedit;
+};
+if (mylhcbeam>1) {
+    call, file="madxscripts/correctMechSep3_b4.madx";
+    make_end_markers=1;
+    seqedit, sequence=lhcb2; flatten; endedit;
+};
+exec, myslice;
 call, file="madxscripts/rematch_chroma.madx";
 call, file="madxscripts/rematch_tune.madx";
 
@@ -275,7 +286,7 @@ if (par_on_errors_LHC == 1) {
     call, file="modules/submodule_04e_s1_synthesize_knobs.madx";
 };
 
-! Custom measured FQ errors (conditional on config switches)
+ Custom measured FQ errors (conditional on config switches)
 if (on_D2 == 1) {
     call, file="efcomp/Efcomp_MBRD_measured.madx";
 };
