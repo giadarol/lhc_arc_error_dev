@@ -24,7 +24,7 @@ import xtrack as xt
 # Constants
 # =============================================================================
 
-TRACKING_TOOLS = "./scripts/madx"
+TRACKING_TOOLS = "./madx"
 TRACKING_DATA = "./data"
 MAX_ORDER = 15  # lhcerrors tables always have orders 1..15
 POSITIONS = ["r5", "l5", "r1", "l1"]  # standard iteration order for triplet
