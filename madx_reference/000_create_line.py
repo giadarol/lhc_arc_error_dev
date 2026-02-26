@@ -146,3 +146,27 @@ Clean up
 print("Cleaning up temporary files...")
 cleanup()
 print("Done.")
+
+
+madx.options['no_fatal_stop'] = True
+
+madmacro = '''
+
+ yrotangle := table(rotations, slot, yrota);  // rotation around vertical axis
+ inout     := table(rotations, slot, inout);  // 0: single bore   1: outer    2: inner
+
+ print, "inout=";
+ value, inout;
+
+ if (inout > 0 && mylhcbeam ==   2) {inout= 3 - inout;} ;    // beam 2 clockwise, bv=-1
+ if (inout > 0 && mylhcbeam ==   3) {inout= 3 - inout;} ;    // beam 2 clockwise
+ if (inout > 0 && mylhcbeam ==   4) {inout= 3 - inout;} ;    // beam 2 counter-clockwise
+
+ if (inout > 0 && yrotangle == 180) {inout= 3 - inout;} ;    // rotated magnet
+
+ !if (inout == 0) {exec, Set_Dipole_Mult(slot, slot)   ;} ;
+ !if (inout == 1) {exec, Set_Dipole_Mult(slot, slot.v1);} ;
+ !if (inout == 2) {exec, Set_Dipole_Mult(slot, slot.v2);} ;
+'''
+
+madx.input(madmacro.replace('slot', "MB.A25R1.v1"))

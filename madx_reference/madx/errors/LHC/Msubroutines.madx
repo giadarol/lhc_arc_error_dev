@@ -58,8 +58,14 @@
  Efcomp_Measured_Dip(slot) : macro = {
 ! build aperture name from slotname
 
+ print, text="Executing macro Efcomp_Measured_Dip for";
+ print, text="slot";
+
  yrotangle := table(rotations, slot, yrota);  // rotation around vertical axis
  inout     := table(rotations, slot, inout);  // 0: single bore   1: outer    2: inner
+
+ print, text="yrotangle="; value, yrotangle;
+ print, text="inout="; value, inout;
 
  if (inout > 0 && mylhcbeam ==   2) {inout= 3 - inout;} ;    // beam 2 clockwise, bv=-1
  if (inout > 0 && mylhcbeam ==   3) {inout= 3 - inout;} ;    // beam 2 clockwise
@@ -77,9 +83,17 @@
  Set_Dipole_Mult(slot, apert) :  macro {
 ! extract multipole values from table and call EFCOMP
 
+ print , text="Executing macro Set_Dipole_Mult for slot";
+ print , text="slot";
+ print , text="Aperture name for this slot=";
+ print , text="apert";
+
  yfac = 1;
  if (yrotangle == 180) {yfac = -1; };
  if (mylhcbeam ==   4) {yfac = -1*yfac; };
+
+print, text="yrotangle="; value, yrotangle;
+print, text="yfac="; value, yfac;
 
 !value, apert, slot, yfac, inout;
 
