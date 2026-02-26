@@ -33,7 +33,7 @@ Launch from the making_error_line/HL_FQ_lattice/ directory.
 """
 
 beam = 1
-seed = 6
+seed = 0
 version = 19
 optics = 'round'
 i_mo = 300.
