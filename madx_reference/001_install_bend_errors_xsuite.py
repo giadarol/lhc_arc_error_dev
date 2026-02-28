@@ -126,12 +126,12 @@ for name in names:
     dkslr_mad = np.asarray(dkslr_mad) * line[name].length
 
     # Make it absolute error
-    dknl = dknlr_mad * k_ref * ref_r**(order-np.arange(len(dknlr_mad))) * factorial(np.arange(len(dknlr_mad))) / factorial(order) / (2*(len(dknlr_mad)-np.arange(len(dknlr_mad)))+1)
-    dksl = dkslr_mad * k_ref * ref_r**(order-np.arange(len(dkslr_mad))) * factorial(np.arange(len(dkslr_mad))) / factorial(order) / (2*(len(dkslr_mad)-np.arange(len(dkslr_mad))))
+    dknl = dknlr_mad * k_ref * ref_r**(order-np.arange(len(dknlr_mad))) * factorial(np.arange(len(dknlr_mad))) / factorial(order)
+    dksl = dkslr_mad * k_ref * ref_r**(order-np.arange(len(dkslr_mad))) * factorial(np.arange(len(dkslr_mad))) / factorial(order)
 
     for jj in range(len(dknl)):
-        line.element_refs[name].knl[jj] = line.element_refs[name].knl[jj] + dknl[jj]
-        line.element_refs[name].ksl[jj] = line.element_refs[name].ksl[jj] + dksl[jj]
+        line.element_refs[name].knl[jj] = line[name].knl[jj] + dknl[jj]
+        line.element_refs[name].ksl[jj] = line[name].ksl[jj] + dksl[jj]
 
     if np.any(np.where(np.abs((line[name].knl-line_ref[name].knl)/line_ref[name].knl*100) > 1e-10)):
         print(f"Something wrong with knl for {name}.")
