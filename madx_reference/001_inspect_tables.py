@@ -1,11 +1,13 @@
 import xtrack as xt
 import numpy as np
+from math import factorial
 
 # TODO:
 # - Remember to mask away low-order multipoles
 # - yrot, s_rot where applicable
 # - b2
 
+line_ref = xt.load("hllhc_b1_v19_round_imo300_arcs.json")
 
 APER_NAME = {
     'b1': {
@@ -49,7 +51,7 @@ max_order = 15
 dknlr_mad = []
 dkslr_mad = []
 
-for ii in range(0, max_order+1):
+for ii in range(0, max_order):
     aa = tt_err[f'a{ii+1}', aper_name]
     bb = tt_err[f'b{ii+1}', aper_name]
 
@@ -59,3 +61,17 @@ for ii in range(0, max_order+1):
 dklnr_mad = np.array(dknlr_mad)
 dksnr_mad = np.array(dkslr_mad)
 
+multipole_obj = line_ref[slice_name]
+k_ref = multipole_obj.knl[order_ref]
+
+knl = []
+ksl = []
+
+for ii in range(0, max_order):
+    kknn = dklnr_mad[ii] * k_ref * ref_r**(order_ref - (ii)) * factorial(ii) / factorial(order_ref)
+    kkss = dksnr_mad[ii] * k_ref * ref_r**(order_ref - (ii)) * factorial(ii) / factorial(order_ref)
+    knl.append(kknn)
+    ksl.append(kkss)
+
+knl = np.array(knl)
+ksl = np.array(ksl)
