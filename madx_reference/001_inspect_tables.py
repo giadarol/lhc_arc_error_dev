@@ -37,7 +37,9 @@ tt_err = xt.Table(data=tt_err_data, col_names=tt_raw._col_names)
 
 beam = 'b1'
 sector = '56'
-magnet = 'mb.a25r5.b1'
+slice_name = 'mb.a25r5.b1..1'
+magnet = slice_name.split('..')[0]
+order_ref = 0
 
 aper_name = '.'.join(magnet.split('.')[:-1]) + '.' + APER_NAME[beam][sector]
 
@@ -51,7 +53,9 @@ for ii in range(0, max_order+1):
     aa = tt_err[f'a{ii+1}', aper_name]
     bb = tt_err[f'b{ii+1}', aper_name]
 
-    if ii == 2:
-        prrrrr
+    dknlr_mad.append(1e-4 * bb)
+    dkslr_mad.append(-1e-4 * aa)
 
+dklnr_mad = np.array(dknlr_mad)
+dksnr_mad = np.array(dkslr_mad)
 
