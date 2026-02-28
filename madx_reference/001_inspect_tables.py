@@ -42,6 +42,7 @@ sector = '56'
 slice_name = 'mb.a25r5.b1..1'
 magnet = slice_name.split('..')[0]
 order_ref = 0
+scale_input = {'a1': 0, 'a2': 0, 'b1': 0, 'b2': 0}
 
 aper_name = '.'.join(magnet.split('.')[:-1]) + '.' + APER_NAME[beam][sector]
 
@@ -52,11 +53,18 @@ dknlr_mad = []
 dkslr_mad = []
 
 for ii in range(0, max_order):
+
     aa = tt_err[f'a{ii+1}', aper_name]
     bb = tt_err[f'b{ii+1}', aper_name]
 
+    scale_aa = scale_input.get(f'a{ii+1}', 1)
+    scale_bb = scale_input.get(f'b{ii+1}', 1)
+
+    aa *= scale_aa
+    bb *= scale_bb
+
     dknlr_mad.append(1e-4 * bb)
-    dkslr_mad.append(-1e-4 * aa)
+    dkslr_mad.append(1e-4 * aa)
 
 dklnr_mad = np.array(dknlr_mad)
 dksnr_mad = np.array(dkslr_mad)
@@ -64,14 +72,15 @@ dksnr_mad = np.array(dkslr_mad)
 multipole_obj = line_ref[slice_name]
 k_ref = multipole_obj.knl[order_ref]
 
-knl = []
-ksl = []
+add_to_knl = []
+add_to_ksl = []
 
 for ii in range(0, max_order):
-    kknn = dklnr_mad[ii] * k_ref * ref_r**(order_ref - (ii)) * factorial(ii) / factorial(order_ref)
-    kkss = dksnr_mad[ii] * k_ref * ref_r**(order_ref - (ii)) * factorial(ii) / factorial(order_ref)
-    knl.append(kknn)
-    ksl.append(kkss)
+    kknn = (-1) ** (ii    ) * dklnr_mad[ii] * k_ref * ref_r**(order_ref - (ii)) * factorial(ii) / factorial(order_ref)
+    kkss = (-1) ** (ii + 1) * dksnr_mad[ii] * k_ref * ref_r**(order_ref - (ii)) * factorial(ii) / factorial(order_ref)
+    add_to_knl.append(kknn)
+    add_to_ksl.append(kkss)
 
-knl = np.array(knl)
-ksl = np.array(ksl)
+import xobjects as xo
+xo.assert_allclose(add_to_knl[2:], multipole_obj.knl[2:], rtol=1e-10, atol=1e-10)
+xo.assert_allclose(add_to_ksl[2:], multipole_obj.ksl[2:], rtol=1e-10, atol=1e-10)
