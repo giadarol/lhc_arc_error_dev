@@ -104,13 +104,13 @@ elements = [e for e, m in zip(elements, mask) if m]
 names = [n for n, m in zip(names, mask) if m]
 line.env.extend_knl_ksl(max_order-1, names)
 for name in names:
-    print(f"\nInstalling field errors for {name}")
+    # print(f"\nInstalling field errors for {name}")
     nn = name.split("..")[0] # elements are sliced
     sector = SECTORS[nn.split('.')[1][-2:]]
     aper_name = '.'.join(nn.split('.')[:-1]) + '.' + APER_NAME[f"b{beam}"][sector]
 
     order = 0
-    k_ref = line[name].knl[0] * line[name].length
+    k_ref = line[name].knl[0] / line[name].length
 
     dknlr_mad = []
     dkslr_mad = []
@@ -126,12 +126,28 @@ for name in names:
     dkslr_mad = np.asarray(dkslr_mad) * line[name].length
 
     # Make it absolute error
-    dknl = dknlr_mad * k_ref * ref_r**(order-np.arange(len(dknlr_mad))) * factorial(np.arange(len(dknlr_mad))) / factorial(order)
-    dksl = dkslr_mad * k_ref * ref_r**(order-np.arange(len(dkslr_mad))) * factorial(np.arange(len(dkslr_mad))) / factorial(order)
+    dknl = dknlr_mad * k_ref * ref_r**(order-np.arange(len(dknlr_mad))) * factorial(np.arange(len(dknlr_mad))) / factorial(order) / (2*(len(dknlr_mad)-np.arange(len(dknlr_mad)))+1)
+    dksl = dkslr_mad * k_ref * ref_r**(order-np.arange(len(dkslr_mad))) * factorial(np.arange(len(dkslr_mad))) / factorial(order) / (2*(len(dkslr_mad)-np.arange(len(dkslr_mad))))
 
     for jj in range(len(dknl)):
         line.element_refs[name].knl[jj] = line.element_refs[name].knl[jj] + dknl[jj]
         line.element_refs[name].ksl[jj] = line.element_refs[name].ksl[jj] + dksl[jj]
 
-    print(line[name].knl)
-    print(line_ref[name].knl)
+    if np.any(np.where(np.abs((line[name].knl-line_ref[name].knl)/line_ref[name].knl*100) > 1e-10)):
+        print(f"Something wrong with knl for {name}.")
+        print(line[name].knl)
+        print(line_ref[name].knl)
+    if np.any(np.where(np.abs((line[name].ksl-line_ref[name].ksl)/line_ref[name].ksl*100) > 1e-10)):
+        print(f"Something wrong with ksl for {name}.")
+        print(line[name].ksl)
+        print(line_ref[name].ksl)
+
+# print(f"\n mb.a25r5.b1..1")
+# print(line["mb.a25r5.b1..1"].knl)
+# print(line_ref["mb.a25r5.b1..1"].knl)
+# print((line["mb.a25r5.b1..1"].knl-line_ref["mb.a25r5.b1..1"].knl)/line_ref["mb.a25r5.b1..1"].knl*100)
+# print(line["mb.a25r5.b1..1"].knl/line_ref["mb.a25r5.b1..1"].knl)
+# print(line["mb.a25r5.b1..1"].ksl)
+# print(line_ref["mb.a25r5.b1..1"].ksl)
+# print((line["mb.a25r5.b1..1"].ksl-line_ref["mb.a25r5.b1..1"].ksl)/line_ref["mb.a25r5.b1..1"].ksl*100)
+# print(line["mb.a25r5.b1..1"].ksl/line_ref["mb.a25r5.b1..1"].ksl)
