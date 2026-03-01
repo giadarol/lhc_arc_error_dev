@@ -117,7 +117,7 @@ for nn in line.element_names:
         for ii in range(min_order, max_order):
             kknn_rel = multipole_errors[nn_err]['knl_rel'][ii]
             kkss_rel = multipole_errors[nn_err]['ksl_rel'][ii]
-            ref_order = multipole_errors[nn_err]['ref_order']
+            ref_order = int(multipole_errors[nn_err]['ref_order'])
             if ii == ref_order:
                 raise ValueError(
                     f"Error of order {ii} for {nn} is relative to the reference multipole, which is not supported. "
