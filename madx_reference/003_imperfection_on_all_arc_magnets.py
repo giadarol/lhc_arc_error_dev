@@ -1,4 +1,5 @@
 import numpy as np
+from scipy.special import factorial
 
 import xtrack as xt
 
@@ -66,3 +67,24 @@ for nn in tt_err_two_aper['name']:
         raise ValueError(f"Unexpected magnet name: {nn}")
 tt_err_two_aper['ref_order'] = np.array(ref_order)
 
+# From WISE units to knl_rel and ksl_rel
+max_order = 15
+ref_radius = 0.017
+
+knl_rel = np.zeros((len(tt_err_two_aper), max_order))
+ksl_rel = np.zeros((len(tt_err_two_aper), max_order))
+
+for ii in range(0, max_order):
+
+    aa = tt_err_two_aper[f'a{ii+1}']
+    bb = tt_err_two_aper[f'b{ii+1}']
+    ref_order = tt_err_two_aper['ref_order']
+
+    dknlr_mad = 1e-4 * bb * (-1) ** (ii    )
+    dkslr_mad = 1e-4 * aa * (-1) ** (ii + 1)
+
+    kknn_rel = dknlr_mad * ref_radius**(ref_order - (ii)) * factorial(ii) / factorial(ref_order)
+    kkss_ref = dkslr_mad * ref_radius**(ref_order - (ii)) * factorial(ii) / factorial(ref_order)
+
+    knl_rel[:, ii] = kknn_rel
+    ksl_rel[:, ii] = kkss_ref
