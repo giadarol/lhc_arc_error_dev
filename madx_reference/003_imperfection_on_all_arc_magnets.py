@@ -40,25 +40,29 @@ for side in BEAM_MAPPING_PER_SIDE:
 
 
 # Isolate magnets with two apertures (end with .b1, .b2, .v1, .v2)is_two_aper = np.array([nn.endswith('.b1') or nn.endswith('.b2') or nn.endswith('.v1') or nn.endswith('.v2') for nn in line.element_names])
-tt_two_aper = tt_err.rows[r'.*\.b1|.*\.b2|.*\.v1|.*\.v2']
+tt_err_two_aper = tt_err.rows[r'.*\.b1|.*\.b2|.*\.v1|.*\.v2']
 
-# Attach name with beam instead of aperture to error table
+# Use name with beam instead of name with aper
+name_with_aper = tt_err_two_aper['name']
+name_with_beam = []
+for nn in name_with_aper:
+    side_aper = nn[-5:]
+    side_beam = SIDE_APER_TO_SIDE_BEAM[side_aper]
+    name_with_beam.append(nn[:-5] + side_beam)
+name_with_beam = np.array(name_with_beam)
 
-name_with_aper = tt_two_aper['name']
-name_with_beam = np.array([SIDE_APER_TO_SIDE_BEAM.get(nn, nn) for nn in name_with_aper])
-tt_two_aper['name_with_aper'] = name_with_aper
-tt_two_aper['name_with_beam'] = name_with_beam
-tt_two_aper['name'] = name_with_beam
+tt_err_two_aper['name_with_aper'] = name_with_aper
+tt_err_two_aper['name_with_beam'] = name_with_beam
+tt_err_two_aper['name'] = name_with_beam
 
-
-tt = line.get_table()
-name_no_slice = []
-slice_index = []
-for nn in tt.name:
-    if '..' in nn and not nn.endswith('..r'): # ignore the "r" correctors ?!
-        nn_no_slice = nn.split('..')[0]
-        name_no_slice.append(nn_no_slice)
-        slice_index.append(int(nn.split('..')[1]))
+# Attach reference order (0 if mb, 1 if mq, fail otherwise)
+ref_order = []
+for nn in tt_err_two_aper['name']:
+    if nn.startswith('mb'):
+        ref_order.append(0)
+    elif nn.startswith('mq'):
+        ref_order.append(1)
     else:
-        name_no_slice.append(nn)
-        slice_index.append(None)
+        raise ValueError(f"Unexpected magnet name: {nn}")
+tt_err_two_aper['ref_order'] = np.array(ref_order)
+
