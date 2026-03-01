@@ -80,8 +80,8 @@ for ii in range(0, max_order):
     bb = tt_err_two_aper[f'b{ii+1}']
     ref_order = tt_err_two_aper['ref_order']
 
-    dknlr_mad = 1e-4 * bb * (-1) ** (ii    )
-    dkslr_mad = 1e-4 * aa * (-1) ** (ii + 1)
+    dknlr_mad = 1e-4 * bb * (-1) ** (ref_order + ii    )
+    dkslr_mad = 1e-4 * aa * (-1) ** (ref_order + ii + 1)
 
     kknn_rel = dknlr_mad * ref_radius**(ref_order - (ii)) * factorial(ii) / factorial(ref_order)
     kkss_ref = dkslr_mad * ref_radius**(ref_order - (ii)) * factorial(ii) / factorial(ref_order)
