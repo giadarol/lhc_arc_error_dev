@@ -88,3 +88,6 @@ for ii in range(0, max_order):
 
     knl_rel[:, ii] = kknn_rel
     ksl_rel[:, ii] = kkss_ref
+
+tt_err_two_aper['knl_rel'] = knl_rel
+tt_err_two_aper['ksl_rel'] = ksl_rel
