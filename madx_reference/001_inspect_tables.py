@@ -63,8 +63,8 @@ for ii in range(0, max_order):
     aa *= scale_aa
     bb *= scale_bb
 
-    dknlr_mad.append(1e-4 * bb)
-    dkslr_mad.append(1e-4 * aa)
+    dknlr_mad.append(1e-4 * bb * (-1) ** (ii    ))
+    dkslr_mad.append(1e-4 * aa * (-1) ** (ii + 1))
 
 dklnr_mad = np.array(dknlr_mad)
 dksnr_mad = np.array(dkslr_mad)
@@ -76,8 +76,8 @@ add_to_knl = []
 add_to_ksl = []
 
 for ii in range(0, max_order):
-    kknn = (-1) ** (ii    ) * dklnr_mad[ii] * k_ref * ref_r**(order_ref - (ii)) * factorial(ii) / factorial(order_ref)
-    kkss = (-1) ** (ii + 1) * dksnr_mad[ii] * k_ref * ref_r**(order_ref - (ii)) * factorial(ii) / factorial(order_ref)
+    kknn = dklnr_mad[ii] * k_ref * ref_r**(order_ref - (ii)) * factorial(ii) / factorial(order_ref)
+    kkss = dksnr_mad[ii] * k_ref * ref_r**(order_ref - (ii)) * factorial(ii) / factorial(order_ref)
     add_to_knl.append(kknn)
     add_to_ksl.append(kkss)
 
