@@ -43,6 +43,15 @@ for side in BEAM_MAPPING_PER_SIDE:
 # Isolate magnets with two apertures (end with .b1, .b2, .v1, .v2)is_two_aper = np.array([nn.endswith('.b1') or nn.endswith('.b2') or nn.endswith('.v1') or nn.endswith('.v2') for nn in line.element_names])
 tt_err_two_aper = tt_err.rows[r'.*\.b1|.*\.b2|.*\.v1|.*\.v2']
 
+# I want to keep only the arcs (skip cells 1-7)
+for icell in range(1, 8):
+    for ip in [1, 2, 3, 4, 5, 6, 7, 8]:
+        tt_err_two_aper = tt_err_two_aper.rows.match_not(
+            f'.*\\.{icell}r{ip}.*|.*\\.{icell}l{ip}.*'
+            f'|.*\\.a{icell}r{ip}.*|.*\\.a{icell}l{ip}.*'
+            f'|.*\\.b{icell}r{ip}.*|.*\\.b{icell}l{ip}.*'
+        )
+
 # Use name with beam instead of name with aper
 name_with_aper = tt_err_two_aper['name']
 name_with_beam = []
