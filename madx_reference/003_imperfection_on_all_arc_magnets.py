@@ -2,6 +2,11 @@ import xtrack as xt
 
 from load_wise import load_wise_table_arc_magnets
 
+# TODO:
+# Handle skew
+# Handle sign change for B2
+
+
 min_order = 2
 max_order = 15
 
@@ -28,9 +33,9 @@ for nn in line.element_names:
                 raise ValueError(
                     f"Error of order {ii} for {nn} is relative to the reference multipole, which is not supported. "
                 )
-            line.ref[nn].knl[ii] += kknn_rel * line.ref[nn].knl[ref_order]
-            line.ref[nn].ksl[ii] += kkss_rel * line.ref[nn].knl[ref_order]
-            # line.get(nn).knl[ii] = kknn_rel * line.get(nn).knl[ref_order]
-            # line.get(nn).ksl[ii] = kkss_rel * line.get(nn).knl[ref_order]
+            # line.ref[nn].knl[ii] = kknn_rel * line.ref[nn].knl[ref_order]
+            # line.ref[nn].ksl[ii] = kkss_rel * line.ref[nn].knl[ref_order]
+            line.get(nn).knl[ii] = kknn_rel * line.get(nn).knl[ref_order]
+            line.get(nn).ksl[ii] = kkss_rel * line.get(nn).knl[ref_order]
 
 line.to_json('test_line_with_errors.json')

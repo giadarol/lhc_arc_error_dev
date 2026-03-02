@@ -59,9 +59,11 @@ def load_wise_table_arc_magnets(fname, min_order=2, max_order=15, ref_radius=0.0
         bb = tt_err_two_aper[f'b{ii+1}']
         ref_order = tt_err_two_aper['ref_order']
 
+        # From magnet measurement convention to MADX convention
         dknlr_mad = 1e-4 * bb * (-1) ** (ref_order + ii    )
         dkslr_mad = 1e-4 * aa * (-1) ** (ref_order + ii + 1)
 
+        # From MADX convention to knl
         kknn_rel = dknlr_mad * ref_radius**(ref_order - (ii)) * factorial(ii) / factorial(ref_order)
         kkss_ref = dkslr_mad * ref_radius**(ref_order - (ii)) * factorial(ii) / factorial(ref_order)
 
