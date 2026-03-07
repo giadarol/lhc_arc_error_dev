@@ -83,9 +83,9 @@
  Set_Dipole_Mult(slot, apert) :  macro {
 ! extract multipole values from table and call EFCOMP
 
- print , text="Executing macro Set_Dipole_Mult for slot";
+ print , text="Executing macro Set_Dipole_Mult for slt";
  print , text="slot";
- print , text="Aperture name for this slot=";
+ print , text="Aperture name for this slt=";
  print , text="apert";
 
  yfac = 1;
@@ -159,8 +159,13 @@ print, text="yfac="; value, yfac;
      };
 
 
- Set_Quadru_Mult(slot, apert) :  macro {
+Set_Quadru_Mult(slot, apert) :  macro {
 ! extract multipole values from table and call EFCOMP
+
+ print , text="Executing macro Set_Quadru_Mult for slt";
+ print , text="slot";
+ print , text="Aperture name for this slt=";
+ print , text="apert";
 
  yfac = 1;
  if (yrotangle == 180) {yfac = -1; };
