@@ -6,6 +6,14 @@ from load_wise import load_wise_table_arc_magnets
 # Handle skew
 # Handle sign change for B2
 
+# The rotations table is an invalid tfs because it has a space in a name
+# We need to patch it (replace "not found" with "not_found")
+fname_rotations = 'madx/errors/LHC/rotations_Q2_integral.tab'
+with open(fname_rotations, 'r') as f:
+    content = f.read()
+content = content.replace('not found', 'not_found')
+with open(fname_rotations + '_patched', 'w') as f:
+    f.write(content)
 
 min_order = 2
 max_order = 15
@@ -13,7 +21,8 @@ max_order = 15
 line = xt.load('./hllhc_b1_v19_round_imo300_no_errors.json')
 
 multipole_errors = load_wise_table_arc_magnets(
-    'madx/errors/LHC/wise/collision_errors-emfqcs-6.tfs',
+    fname_err_table='madx/errors/LHC/wise/collision_errors-emfqcs-6.tfs',
+    fname_rotations=fname_rotations + '_patched',
     min_order=min_order, max_order=max_order)
 
 # Apply errors in the line

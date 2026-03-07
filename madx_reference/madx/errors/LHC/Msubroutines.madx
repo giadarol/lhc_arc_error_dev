@@ -142,9 +142,16 @@ print, text="yfac="; value, yfac;
  Efcomp_Measured_Quad(slot) : macro = {
 ! build aperture name from slotname
 
+ print, text="Executing macro Efcomp_Measured_Quad for";
+ print, text="slot";
+
  yrotangle := table(rotations, slot, yrota);  // rotation around vertical axis
  srotangle := table(rotations, slot, srota);  // rotation around beam axis
  inout     := table(rotations, slot, inout);  // 0: single bore    1: outer     2: inner
+
+ print, text="yrotangle="; value, yrotangle;
+ print, text="srotangle="; value, srotangle;
+ print, text="inout="; value, inout;
 
  if (inout > 0 && mylhcbeam ==   2) {inout= 3 - inout;} ;    // beam 2 clockwise, bv=-1
  if (inout > 0 && mylhcbeam ==   3) {inout= 3 - inout;} ;    // beam 2 clockwise
