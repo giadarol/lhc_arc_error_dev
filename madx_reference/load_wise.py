@@ -45,9 +45,9 @@ def load_wise_table_arc_magnets(fname_err_table, fname_rotations, min_order=2, m
             if inout == 0:
                 pass  # single bore, do nothing
             elif inout == 1:
-                nn_with_beam = nn.replace('.v1', '.b1').replace('.v2', '.b2').replace('.b1', '.b1').replace('.b2', '.b2')
+                nn_with_beam = nn.replace('.v1', '.b1').replace('.v2', '.b2')
             elif inout == 2:
-                nn_with_beam = nn.replace('.v1', '.b2').replace('.v2', '.b1').replace('.b1', '.b2').replace('.b2', '.b1')
+                nn_with_beam = nn.replace('.v1', '.b2').replace('.v2', '.b1')
             else:
                 raise ValueError(f"Unexpected inout value {inout} for magnet {nn_no_aper}")
         else: # use standard LHC geography (v1 is the external beam)
@@ -85,8 +85,8 @@ def load_wise_table_arc_magnets(fname_err_table, fname_rotations, min_order=2, m
         ref_order = tt_err_two_aper['ref_order']
 
         # From magnet measurement convention to MADX convention
-        dknlr_mad = 1e-4 * bb * (-1) ** (ii    )
-        dkslr_mad = 1e-4 * aa * (-1) ** (ii + 1)
+        dknlr_mad = 1e-4 * bb * (-1) ** (ref_order + ii    )
+        dkslr_mad = 1e-4 * aa * (-1) ** (ref_order + ii + 1)
 
         # From MADX convention to knl
         kknn_rel = dknlr_mad * ref_radius**(ref_order - (ii)) * factorial(ii) / factorial(ref_order)
