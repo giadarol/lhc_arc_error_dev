@@ -32,7 +32,7 @@ def load_wise_table_arc_magnets(fname_err_table, fname_rotations, min_order=2, m
                 f'|.*\\.b{icell}r{ip}.*|.*\\.b{icell}l{ip}.*'
             )
 
-    # Use name with beam instead of name with aper
+    # Handle rotations and use name with beam instead of name with aper
     name_with_aper = tt_err_two_aper['name']
     name_with_beam = []
     yrotfactor = []
