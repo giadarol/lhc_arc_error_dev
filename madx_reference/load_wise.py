@@ -35,9 +35,11 @@ def load_wise_table_arc_magnets(fname_err_table, fname_rotations, min_order=2, m
     # Use name with beam instead of name with aper
     name_with_aper = tt_err_two_aper['name']
     name_with_beam = []
+    yrotfactor = []
     for nn in name_with_aper:
         # Check if in rot table
         nn_no_aper = nn.replace('.v1', '').replace('.v2', '')
+        yyff = 1
         if nn_no_aper in rot: # aperture-beam mapping explicitly given in rot table
             inout = rot[nn_no_aper]['inout']
             if inout == 0:
@@ -48,16 +50,22 @@ def load_wise_table_arc_magnets(fname_err_table, fname_rotations, min_order=2, m
                 nn_with_beam = nn.replace('.v1', '.b2').replace('.v2', '.b1')
             else:
                 raise ValueError(f"Unexpected inout value {inout} for magnet {nn_no_aper}")
+            yrot = rot[nn_no_aper]['yrot']
+            assert yrot in [0, 180], f"Unexpected yrot value {yrot} for magnet {nn_no_aper}"
+            if yrot == 180:
+                yyff = -1
         else: # use standard LHC geography (v1 is the external beam)
             side_aper = nn[-5:]
             side_beam = SIDE_APER_TO_SIDE_BEAM[side_aper]
             nn_with_beam = nn[:-5] + side_beam
         name_with_beam.append(nn_with_beam)
+        yrotfactor.append(yyff)
     name_with_beam = np.array(name_with_beam)
 
     tt_err_two_aper['name_with_aper'] = name_with_aper
     tt_err_two_aper['name_with_beam'] = name_with_beam
     tt_err_two_aper['name'] = name_with_beam
+    tt_err_two_aper['yrotfactor'] = np.array(yrotfactor)
 
     # Attach reference order (0 if mb, 1 if mq, fail otherwise)
     ref_order = []
@@ -77,14 +85,15 @@ def load_wise_table_arc_magnets(fname_err_table, fname_rotations, min_order=2, m
     ksl_rel = np.zeros((len(tt_err_two_aper), max_order))
 
     ref_order = tt_err_two_aper['ref_order']
+    yrotfactor = tt_err_two_aper['yrotfactor']
     for ii in range(0, max_order):
 
         aa = tt_err_two_aper[f'a{ii+1}']
         bb = tt_err_two_aper[f'b{ii+1}']
 
         # From magnet measurement convention to MADX convention
-        dknlr_mad = 1e-4 * bb * (-1) ** (ref_order + ii    )
-        dkslr_mad = 1e-4 * aa * (-1) ** (ref_order + ii + 1)
+        dknlr_mad = 1e-4 * bb * (-1) ** (ref_order + ii    ) * yrotfactor ** ii
+        dkslr_mad = 1e-4 * aa * (-1) ** (ref_order + ii + 1) * yrotfactor ** (ii + 1)
 
         # From MADX convention to knl
         kknn_rel = dknlr_mad * ref_radius**(ref_order - (ii)) * factorial(ii) / factorial(ref_order)
