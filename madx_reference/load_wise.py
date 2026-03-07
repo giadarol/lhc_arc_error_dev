@@ -36,8 +36,6 @@ def load_wise_table_arc_magnets(fname_err_table, fname_rotations, min_order=2, m
     name_with_aper = tt_err_two_aper['name']
     name_with_beam = []
     for nn in name_with_aper:
-        if nn.startswith('mqml.8r1'):
-            breakpoint()
         # Check if in rot table
         nn_no_aper = nn.replace('.v1', '').replace('.v2', '')
         if nn_no_aper in rot: # aperture-beam mapping explicitly given in rot table
@@ -78,11 +76,11 @@ def load_wise_table_arc_magnets(fname_err_table, fname_rotations, min_order=2, m
     knl_rel = np.zeros((len(tt_err_two_aper), max_order))
     ksl_rel = np.zeros((len(tt_err_two_aper), max_order))
 
+    ref_order = tt_err_two_aper['ref_order']
     for ii in range(0, max_order):
 
         aa = tt_err_two_aper[f'a{ii+1}']
         bb = tt_err_two_aper[f'b{ii+1}']
-        ref_order = tt_err_two_aper['ref_order']
 
         # From magnet measurement convention to MADX convention
         dknlr_mad = 1e-4 * bb * (-1) ** (ref_order + ii    )
@@ -90,10 +88,10 @@ def load_wise_table_arc_magnets(fname_err_table, fname_rotations, min_order=2, m
 
         # From MADX convention to knl
         kknn_rel = dknlr_mad * ref_radius**(ref_order - (ii)) * factorial(ii) / factorial(ref_order)
-        kkss_ref = dkslr_mad * ref_radius**(ref_order - (ii)) * factorial(ii) / factorial(ref_order)
+        kkss_rel = dkslr_mad * ref_radius**(ref_order - (ii)) * factorial(ii) / factorial(ref_order)
 
         knl_rel[:, ii] = kknn_rel
-        ksl_rel[:, ii] = kkss_ref
+        ksl_rel[:, ii] = kkss_rel
 
     tt_err_two_aper['knl_rel'] = knl_rel
     tt_err_two_aper['ksl_rel'] = ksl_rel
@@ -110,4 +108,4 @@ def load_wise_table_arc_magnets(fname_err_table, fname_rotations, min_order=2, m
         multipole_errors[nn]['knl_rel'][:min_order] = 0
         multipole_errors[nn]['ksl_rel'][:min_order] = 0
 
-    return multipole_errors
+    return multipole_errors, tt_err_two_aper

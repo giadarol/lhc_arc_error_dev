@@ -204,6 +204,12 @@ Set_Quadru_Mult(slot, apert) :  macro {
  select, flag=error, class=multipole,  pattern=^slot;
  select, flag=error, class=quadrupole, pattern=^slot;
 
+ ! print a3, b3, a4, b4
+ print, text="a3s="; value, a3s;
+ print, text="b3s="; value, b3s;
+ print, text="a4s="; value, a4s;
+ print, text="b4s="; value, b4s;
+
  Efcomp,  radius = Rr, order= 1,
       dknr:={               1E-4*(-B1s *ON_B1S ),
       1E-4*( B2s *ON_B2S ), 1E-4*(-B3s *ON_B3S ),

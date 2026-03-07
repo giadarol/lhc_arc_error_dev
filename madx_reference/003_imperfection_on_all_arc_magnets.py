@@ -20,7 +20,7 @@ max_order = 15
 
 line = xt.load('./hllhc_b1_v19_round_imo300_no_errors.json')
 
-multipole_errors = load_wise_table_arc_magnets(
+multipole_errors, tt_err_arc = load_wise_table_arc_magnets(
     fname_err_table='madx/errors/LHC/wise/collision_errors-emfqcs-6.tfs',
     fname_rotations=fname_rotations + '_patched',
     min_order=min_order, max_order=max_order)
