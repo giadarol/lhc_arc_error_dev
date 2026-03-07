@@ -24,7 +24,7 @@ for nn in line.element_names:
     print(f'Applying errors to {nn}               ', end='\r', flush=True)
     nn_err = nn.split('..')[0]  # remove ..1, ..2, etc.
     if nn_err in multipole_errors:
-        line.extend_knl_ksl(order=max_order, element_names=[nn])
+        line.extend_knl_rel_ksl_rel(order=max_order, element_names=[nn])
         for ii in range(min_order, max_order):
             kknn_rel = multipole_errors[nn_err]['knl_rel'][ii]
             kkss_rel = multipole_errors[nn_err]['ksl_rel'][ii]
@@ -33,9 +33,15 @@ for nn in line.element_names:
                 raise ValueError(
                     f"Error of order {ii} for {nn} is relative to the reference multipole, which is not supported. "
                 )
+
+            # Using knl_rel and ksl_rel
+            line[nn].main_order = ref_order
+            line.ref[nn].knl_rel[ii] = kknn_rel
+            line.ref[nn].ksl_rel[ii] = kkss_rel
+
             # line.ref[nn].knl[ii] = kknn_rel * line.ref[nn].knl[ref_order]
             # line.ref[nn].ksl[ii] = kkss_rel * line.ref[nn].knl[ref_order]
-            line.get(nn).knl[ii] = kknn_rel * line.get(nn).knl[ref_order]
-            line.get(nn).ksl[ii] = kkss_rel * line.get(nn).knl[ref_order]
+            # line.get(nn).knl[ii] = kknn_rel * line.get(nn).knl[ref_order]
+            # line.get(nn).ksl[ii] = kkss_rel * line.get(nn).knl[ref_order]
 
 line.to_json('test_line_with_errors.json')

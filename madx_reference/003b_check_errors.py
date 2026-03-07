@@ -11,20 +11,21 @@ tt_ref = line_ref.get_table()
 max_order = 18
 
 # Sabotage
-line_test['mb.a25r5.b1..1'].knl[2] = 300
+# line_test['mb.a25r5.b1..1'].knl_rel[2] = 300
 
 for arc in ['12', '23', '34', '45', '56', '67', '78', '81']:
     start = f's.ds.r{arc[0]}.b1'
-    end = f's.ds.r{arc[1]}.b1'
-    tt_test_arc = tt_test.rows[f'{start}:{end}']
-    tt_ref_arc = tt_ref.rows[f'{start}:{end}']
+    end = f's.ds.l{arc[1]}.b1'
+    tt_test_arc = tt_test.rows[start:end]
+    tt_ref_arc = tt_ref.rows[start:end]
 
     for nn in tt_test_arc.name:
         if hasattr(line_ref[nn], 'knl'):
-            for ii in range(max_order):
-                xo.assert_allclose(line_ref[nn].knl[ii], line_test[nn].knl[ii],
+            for ii in range(len(line_ref[nn].knl)):
+                knl_tot_nn, ksl_tot_nn = line_test[nn].get_total_knl_ksl()
+                xo.assert_allclose(knl_tot_nn[ii], line_ref[nn].knl[ii],
                                    rtol=1e-10, atol=1e-10)
-                xo.assert_allclose(line_ref[nn].ksl[ii], line_test[nn].ksl[ii],
+                xo.assert_allclose(ksl_tot_nn[ii], line_ref[nn].ksl[ii],
                                     rtol=1e-10, atol=1e-10)
 
        
