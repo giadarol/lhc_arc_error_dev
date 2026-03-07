@@ -18,9 +18,12 @@ max_order = 18
 
 for arc in ['12', '23', '34', '45', '56', '67', '78', '81']:
     start = f's.ds.r{arc[0]}.b1'
-    end = f's.ds.l{arc[1]}.b1'
+    end = f'e.ds.l{arc[1]}.b1'
     tt_test_arc = tt_test.rows[start:end]
     tt_ref_arc = tt_ref.rows[start:end]
+
+    assert len(tt_test_arc) > 100
+    assert len(tt_ref_arc) > 100
 
     for nn in tt_test_arc.name:
         if hasattr(line_ref[nn], 'knl'):
@@ -30,9 +33,3 @@ for arc in ['12', '23', '34', '45', '56', '67', '78', '81']:
                                    rtol=1e-10, atol=1e-10)
                 xo.assert_allclose(ksl_tot_nn[ii], line_ref[nn].ksl[ii],
                                     rtol=1e-10, atol=1e-10)
-
-       
-            
-    # for ii in range(2, 15): # min_order to max_order
-    #     xo.assert_allclose(tt_test_arc[f'k{ii}l'], tt_ref_arc[f'k{ii}l'], rtol=1e-10, atol=1e-10)
-    #     xo.assert_allclose(tt_test_arc[f'k{ii}sl'], tt_ref_arc[f'k{ii}sl'], rtol=1e-10, atol=1e-10)
