@@ -41,19 +41,20 @@ def load_wise_table_arc_magnets(fname_err_table, fname_rotations, min_order=2, m
         nn_no_aper = nn.replace('.v1', '').replace('.v2', '')
         yyff = 1
         if nn_no_aper in rot: # aperture-beam mapping explicitly given in rot table
-            inout = rot[nn_no_aper]['inout']
-            if inout == 0:
-                pass  # single bore, do nothing
-            elif inout == 1:
-                nn_with_beam = nn.replace('.v1', '.b1').replace('.v2', '.b2')
-            elif inout == 2:
-                nn_with_beam = nn.replace('.v1', '.b2').replace('.v2', '.b1')
-            else:
-                raise ValueError(f"Unexpected inout value {inout} for magnet {nn_no_aper}")
+
+            # Check if rotated
             yrot = rot[nn_no_aper]['yrot']
             assert yrot in [0, 180], f"Unexpected yrot value {yrot} for magnet {nn_no_aper}"
             if yrot == 180:
                 yyff = -1
+
+            inout = rot[nn_no_aper]['inout']
+            assert inout in [1, 2], f"Unexpected inout value {inout} for magnet {nn_no_aper}"
+            if (inout == 1 and yyff == 1) or (inout == 2 and yyff == -1):
+                nn_with_beam = nn.replace('.v1', '.b1').replace('.v2', '.b2')
+            elif (inout == 2 and yyff == 1) or (inout == 1 and yyff == -1):
+                nn_with_beam = nn.replace('.v1', '.b2').replace('.v2', '.b1')
+
         else: # use standard LHC geography (v1 is the external beam)
             side_aper = nn[-5:]
             side_beam = SIDE_APER_TO_SIDE_BEAM[side_aper]
@@ -92,8 +93,8 @@ def load_wise_table_arc_magnets(fname_err_table, fname_rotations, min_order=2, m
         bb = tt_err_two_aper[f'b{ii+1}']
 
         # From magnet measurement convention to MADX convention
-        dknlr_mad = 1e-4 * bb * (-1) ** (ref_order + ii    ) * yrotfactor ** ii
-        dkslr_mad = 1e-4 * aa * (-1) ** (ref_order + ii + 1) * yrotfactor ** (ii + 1)
+        dknlr_mad = 1e-4 * bb * (-1 * yrotfactor) ** (ref_order + ii    )
+        dkslr_mad = 1e-4 * aa * (-1 * yrotfactor) ** (ref_order + ii + 1)
 
         # From MADX convention to knl
         kknn_rel = dknlr_mad * ref_radius**(ref_order - (ii)) * factorial(ii) / factorial(ref_order)
