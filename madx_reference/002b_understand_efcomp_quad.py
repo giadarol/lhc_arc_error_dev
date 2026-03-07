@@ -5,7 +5,7 @@ from cpymad.madx import Madx
 
 mad = Madx()
 
-k0l = 0.01
+k1l = -0.01
 r_ref = 0.3
 dk2r = 0.2
 dk2sr = 0.3
@@ -13,7 +13,7 @@ dk3r = 0.4
 dk3sr = 0.5
 
 src = (f"""
-k1l={k0l};
+k1l={k1l};
 r_ref={r_ref};
 dk2r={dk2r};
 dk2sr={dk2sr};
@@ -45,18 +45,18 @@ mad.input(src)
 dkn_mad = mad.sequence.seq.expanded_elements['elm'].field_errors.dkn
 dks_mad = mad.sequence.seq.expanded_elements['elm'].field_errors.dks
 
-expected_k2l = dk2r * k0l * r_ref**(1 - 2) * factorial(2) / factorial(0)
+expected_k2l = dk2r * k1l * r_ref**(1 - 2) * factorial(2) / factorial(0)
 print(f"Expected k2l: {expected_k2l:.7e}")
 print(f"   Found k2l: {dkn_mad[2]:.7e}")
 
-expected_k2sl = dk2sr * k0l * r_ref**(1 - 2) * factorial(2) / factorial(0)
+expected_k2sl = dk2sr * k1l * r_ref**(1 - 2) * factorial(2) / factorial(0)
 print(f"Expected k2sl: {expected_k2sl:.7e}")
 print(f"   Found k2sl: {dks_mad[2]:.7e}")
 
-expected_k3l = dk3r * k0l * r_ref**(1 - 3) * factorial(3) / factorial(0)
+expected_k3l = dk3r * k1l * r_ref**(1 - 3) * factorial(3) / factorial(0)
 print(f"Expected k3l: {expected_k3l:.7e}")
 print(f"   Found k3l: {dkn_mad[3]:.7e}")
 
-expected_k3sl = dk3sr * k0l * r_ref**(1 - 3) * factorial(3) / factorial(0)
+expected_k3sl = dk3sr * k1l * r_ref**(1 - 3) * factorial(3) / factorial(0)
 print(f"Expected k3sl: {expected_k3sl:.7e}")
 print(f"   Found k3sl: {dks_mad[3]:.7e}")

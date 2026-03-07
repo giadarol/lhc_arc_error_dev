@@ -53,6 +53,7 @@ if (on_errors_LHC==1){
   } else {
     call, file="errors/LHC/Efcomp_MQML.madx";
   };
+  yrotangle = 0; ! GIANNI DEBUG!!!!!
   call, file="errors/LHC/Efcomp_MQ.madx"  ;
   on_B2S=ON_B2Saux;
 };

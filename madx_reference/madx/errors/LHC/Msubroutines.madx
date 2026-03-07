@@ -181,7 +181,7 @@ Set_Quadru_Mult(slot, apert) :  macro {
  sfac = 1;
  if (srotangle == 180) {sfac = -1; };
 
-!value, apert, slot, yfac, sfac, inout;
+ value, yrotangle, yfac, sfac, inout;
 
 
  a1s  = table(efield, apert, A1)      *sfac;  b1s  = table(efield, apert, B1) *yfac*sfac;
