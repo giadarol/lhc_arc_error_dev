@@ -5,8 +5,11 @@ import numpy as np
 line_test = xt.load('test_line_with_errors.json')
 line_ref = xt.load('hllhc_b1_v19_round_imo300_arcs.json')
 
-tt_test = line_test.get_table()
-tt_ref = line_ref.get_table()
+tt_test = line_test.get_table(attr=True)
+tt_ref = line_ref.get_table(attr=True)
+
+tt_test_quad = tt_test.rows['mq.*']
+tt_ref_quad = tt_ref.rows['mq.*']
 
 max_order = 18
 
